@@ -1,85 +1,72 @@
-// Simulando LocalStorage para exemplo
-let membros = JSON.parse(localStorage.getItem("membros")) || [];
-let mensagens = JSON.parse(localStorage.getItem("mensagens")) || [];
-let denuncias = JSON.parse(localStorage.getItem("denuncias")) || [];
-let ausencias = JSON.parse(localStorage.getItem("ausencias")) || [];
-
-// Estilos de jogo
+// Função para adicionar estilo de jogo
 function adicionarEstilo() {
-  const estiloInput = document.getElementById("novoEstilo");
-  const estilo = estiloInput.value.trim();
-  if (estilo !== "") {
-    const lista = document.getElementById("listaEstilos");
-    const li = document.createElement("li");
+  const novoEstilo = document.getElementById('novoEstilo').value;
+  if (novoEstilo) {
+    let estilos = JSON.parse(localStorage.getItem('estilos')) || [];
+    estilos.push(novoEstilo);
+    localStorage.setItem('estilos', JSON.stringify(estilos));
+    atualizarEstilos();
+  }
+}
+
+// Função para atualizar a lista de estilos
+function atualizarEstilos() {
+  const listaEstilos = document.getElementById('listaEstilos');
+  listaEstilos.innerHTML = '';
+  const estilos = JSON.parse(localStorage.getItem('estilos')) || [];
+  estilos.forEach(estilo => {
+    const li = document.createElement('li');
     li.textContent = estilo;
-    lista.appendChild(li);
-    estiloInput.value = "";
-  }
+    listaEstilos.appendChild(li);
+  });
 }
 
-// Motivo de ausência
+// Função para enviar a justificativa
 function enviarMotivo() {
-  const motivo = document.getElementById("motivoInput").value.trim();
-  if (motivo !== "") {
-    ausencias.push({ membro: "SSDG001", motivo, status: "pendente" });
-    localStorage.setItem("ausencias", JSON.stringify(ausencias));
-    alert("Justificativa enviada com sucesso.");
-    document.getElementById("motivoInput").value = "";
+  const motivo = document.getElementById('motivoInput').value;
+  if (motivo) {
+    localStorage.setItem('justificativa', motivo);
+    alert("Justificativa enviada com sucesso!");
   }
 }
 
-// Denúncia com evidência
+// Função para enviar a denúncia
 function enviarDenuncia() {
-  const nome = document.getElementById("nomeDenunciado").value.trim();
-  const detalhe = document.getElementById("detalheDenuncia").value.trim();
-  const imagem = document.getElementById("evidenciaImagem").files[0];
+  const nomeDenunciado = document.getElementById('nomeDenunciado').value;
+  const detalheDenuncia = document.getElementById('detalheDenuncia').value;
+  const evidenciaImagem = document.getElementById('evidenciaImagem').files[0];
 
-  if (nome && detalhe) {
-    const leitor = new FileReader();
-    leitor.onload = function(e) {
-      denuncias.push({
-        membro: "SSDG001",
-        denunciado: nome,
-        detalhe: detalhe,
-        imagem: e.target.result,
-        status: "pendente"
-      });
-      localStorage.setItem("denuncias", JSON.stringify(denuncias));
-      alert("Denúncia enviada com sucesso.");
-      document.getElementById("nomeDenunciado").value = "";
-      document.getElementById("detalheDenuncia").value = "";
-      document.getElementById("evidenciaImagem").value = "";
-    };
-    if (imagem) {
-      leitor.readAsDataURL(imagem);
-    } else {
-      denuncias.push({
-        membro: "SSDG001",
-        denunciado: nome,
-        detalhe: detalhe,
-        imagem: null,
-        status: "pendente"
-      });
-      localStorage.setItem("denuncias", JSON.stringify(denuncias));
-      alert("Denúncia enviada sem imagem.");
-    }
+  if (nomeDenunciado && detalheDenuncia && evidenciaImagem) {
+    const formData = new FormData();
+    formData.append('nomeDenunciado', nomeDenunciado);
+    formData.append('detalheDenuncia', detalheDenuncia);
+    formData.append('evidenciaImagem', evidenciaImagem);
+
+    // Enviar dados para o servidor ou salvar no localStorage
+    localStorage.setItem('denuncia', JSON.stringify({
+      nomeDenunciado,
+      detalheDenuncia,
+      evidenciaImagem: evidenciaImagem.name
+    }));
+    
+    alert("Denúncia enviada com sucesso!");
   }
 }
 
-// Correio
-function carregarMensagens() {
-  const lista = document.getElementById("mensagensMembro");
-  if (lista) {
-    lista.innerHTML = "";
-    mensagens.forEach((msg) => {
-      if (msg.destino === "SSDG001" || msg.destino === "TODOS") {
-        const li = document.createElement("li");
-        li.textContent = msg.conteudo;
-        lista.appendChild(li);
-      }
-    });
+// Função para carregar as informações salvas (Estilos, Justificativa, Denúncia)
+function carregarDados() {
+  atualizarEstilos();
+  const justificativa = localStorage.getItem('justificativa');
+  if (justificativa) {
+    document.getElementById('motivoInput').value = justificativa;
+  }
+  
+  const denuncia = JSON.parse(localStorage.getItem('denuncia'));
+  if (denuncia) {
+    // Exibir as informações de denúncia se necessário
+    console.log('Denúncia:', denuncia);
   }
 }
 
-// Carregar mensagens ao abrir o painel
-document.addEventListener("DOMContentLoaded", carregarMensagens);
+// Carregar dados ao carregar a página
+window.onload = carregarDados;
