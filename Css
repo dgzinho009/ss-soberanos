@@ -1,1 +1,86 @@
 
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a0a0a;
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #111;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #f5c518;
+}
+
+.logo {
+    border-radius: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 200px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input {
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: #222;
+    color: #fff;
+    font-size: 1em;
+}
+
+button {
+    padding: 12px;
+    background-color: #f5c518;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #e0b800;
+}
+
+.options {
+    margin-top: 10px;
+}
+
+.options a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.options a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 20px;
+    font-size: 0.8em;
+    color: #666;
+}
