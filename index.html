@@ -1,78 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soberanos FF</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: rgba(0, 0, 0, 0.75);
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 0 15px #000;
-        }
-        input[type="text"] {
-            width: 80%;
-            padding: 10px;
-            margin: 12px 0;
-            border: none;
-            border-radius: 6px;
-        }
-        button {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 6px;
-            background-color: #28a745;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .options {
-            margin-top: 20px;
-        }
-        footer {
-            margin-top: 30px;
-            font-size: 0.85em;
-            color: #ccc;
-        }
-        a {
-            color: #00acee;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soberanos FF</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 95%;
+      padding: 10px;
+      background-color: #1e90ff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #005ecb;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .instagram-link {
+      display: block;
+      margin-top: 10px;
+      color: #1e90ff;
+      text-decoration: none;
+    }
+
+    .instagram-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>SOBERANOS</h1>
-        <p>Bem-vindo ao painel de login</p>
-        <form id="loginForm">
-            <input type="text" id="login" placeholder="Insira seu ID" required>
-            <button type="submit">Entrar</button>
-        </form>
-        <div class="options">
-            <p>Não tem acesso? <a href="https://instagram.com/soberanos.ff" target="_blank">Entre em contato pelo Instagram</a></p>
-        </div>
-        <footer>Soberanos FF - Todos os Direitos Reservados.</footer>
-    </div>
+  <div class="container">
+    <h1>SOBERANOS</h1>
+    <p>Bem-vindo</p>
+    <form id="loginForm">
+      <input type="text" id="login" placeholder="Insira seu ID" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <footer>
+      Soberanos - Todos os Direitos Reservados.
+      <a href="https://instagram.com/soberanos.ff" target="_blank" class="instagram-link">@soberanos.ff</a>
+    </footer>
+  </div>
 
-    <script src="js/script.js"></script>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const loginInput = document.getElementById("login");
+      const login = loginInput.value.trim().toUpperCase();
+
+      // IDs autorizados
+      const idsAutorizados = ["SSDG001", "LKADM001"];
+
+      if (idsAutorizados.includes(login)) {
+        window.location.href = "painel.html";
+      } else {
+        alert("ID inválido. Tente novamente.");
+        loginInput.value = "";
+        loginInput.focus();
+      }
+    });
+  </script>
 </body>
 </html>
