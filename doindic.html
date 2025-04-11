@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecionando...</title>
+  <script>
+    // Recupera o tipo de usuário salvo no login
+    const usuarioTipo = localStorage.getItem("usuarioTipo");
+
+    if (usuarioTipo === "adm") {
+      window.location.href = "painel-adm.html";
+    } else if (usuarioTipo === "membro") {
+      window.location.href = "painel-membro.html";
+    } else {
+      // Caso não esteja logado ou não tenha tipo definido
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecionando, aguarde...</p>
+</body>
+</html>
