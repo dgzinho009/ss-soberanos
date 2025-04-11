@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Painel Membro - Soberanos</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Membro</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body onload="verificarAcesso('membro'); mostrarPerfil();">
+<body>
   <div class="container">
-    <h1>Bem-vindo, <span id="nomeUsuario"></span></h1>
-    <p>Função: <span id="funcaoUsuario"></span></p>
+    <h1>Bem-vindo, Membro!</h1>
+    <p>Aqui você pode visualizar as informações da guilda.</p>
 
-    <h2>Acesso liberado:</h2>
-    <ul>
-      <li>Visualizar ranking</li>
-      <li>Ver avisos</li>
-      <li>Ver histórico de guerras</li>
+    <h2>Ranking da Guilda</h2>
+    <ul class="member-list">
+      <li>Jogador 1 - 1520 pontos</li>
+      <li>Jogador 2 - 1380 pontos</li>
+      <li>Jogador 3 - 1250 pontos</li>
     </ul>
 
-    <a href="index.html">Sair</a>
+    <h2>Sua Função</h2>
+    <p>Arrochador / Suporte / Atirador</p>
+
+    <a class="btn" href="index.html">Sair</a>
   </div>
 </body>
 </html>
