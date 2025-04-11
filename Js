@@ -1,17 +1,50 @@
-const user = new URLSearchParams(window.location.search).get('user')?.toUpperCase().trim();
+<script>
+  function gerarSensi() {
+    const aparelho = document.getElementById("aparelho").value;
+    const ram = document.getElementById("ram").value;
+    const dpi = document.getElementById("dpi").value;
+    const jogo = document.getElementById("jogo").value;
 
-if (!user) {
-  document.body.innerHTML = `
-    <div style="padding: 50px; color: white; background: #111; text-align: center;">
-      <h2>ID não informado</h2>
-      <p>Você precisa fazer login primeiro.</p>
-      <a href="index.html" style="color: #1e90ff;">Voltar ao login</a>
-    </div>`;
-} else if (user !== 'SSDG001' && user !== 'LK001') {
-  document.body.innerHTML = `
-    <div style="padding: 50px; color: white; background: #111; text-align: center;">
-      <h2>ID não autorizado</h2>
-      <p>Este ID não tem acesso ao painel.</p>
-      <a href="index.html" style="color: #1e90ff;">Voltar ao login</a>
-    </div>`;
-}
+    let geral, pontoVer, redDot, 2x, 4x, awm;
+
+    if (ram === "2GB" || dpi === "Baixa") {
+      geral = 85;
+      pontoVer = 70;
+      redDot = 80;
+      awm = 10;
+    } else if (ram === "3GB") {
+      geral = 90;
+      pontoVer = 75;
+      redDot = 85;
+      awm = 15;
+    } else if (ram === "4GB") {
+      geral = 95;
+      pontoVer = 80;
+      redDot = 90;
+      awm = 20;
+    } else {
+      geral = 100;
+      pontoVer = 85;
+      redDot = 95;
+      awm = 25;
+    }
+
+    if (jogo === "AWM") {
+      awm += 10;
+    } else if (jogo === "MP40 / Rush") {
+      geral += 5;
+      redDot += 5;
+    }
+
+    const resultado = `
+Recomendações de Sensibilidade:
+- Geral: ${geral}
+- Ponto Vermelho: ${pontoVer}
+- Mira 2x: ${Math.round(redDot * 0.95)}
+- Mira 4x: ${Math.round(redDot * 0.9)}
+- AWM: ${awm}
+    `;
+
+    document.getElementById("resultado-sensi").innerText = resultado;
+  }
+</script>
