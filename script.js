@@ -1,17 +1,12 @@
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+Arquivo: script.js
 
-  const usuario = document.getElementById("usuario").value.trim();
-  const senha = document.getElementById("senha").value.trim();
-  const tipo = document.getElementById("tipoUsuario").value;
+// Salvar novo membro no localStorage document.getElementById("criarMembroForm")?.addEventListener("submit", function (e) { e.preventDefault();
 
-  if (usuario && senha && tipo) {
-    if (tipo === "adm") {
-      window.location.href = "painel_adm.html";
-    } else if (tipo === "membro") {
-      window.location.href = "painel_membro.html";
-    }
-  } else {
-    alert("Preencha todos os campos corretamente.");
-  }
-});
+const nome = document.getElementById("nomeMembro").value; const funcao = document.getElementById("funcaoMembro").value;
+
+if (nome && funcao) { const membros = JSON.parse(localStorage.getItem("membros")) || []; membros.push({ nome, funcao }); localStorage.setItem("membros", JSON.stringify(membros)); alert("Membro criado com sucesso!"); document.getElementById("criarMembroForm").reset(); } });
+
+// Listar membros no painel de membro function carregarMembros() { const lista = document.getElementById("listaMembros"); const membros = JSON.parse(localStorage.getItem("membros")) || []; if (lista) { lista.innerHTML = membros .map( (m) => <li><strong>${m.nome}</strong> - Função: ${m.funcao}</li> ) .join(""); } }
+
+document.addEventListener("DOMContentLoaded", carregarMembros);
+
