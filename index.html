@@ -2,27 +2,29 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Soberanos - Login</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Login - Soberanos</title>
+  <link rel="stylesheet" href="style.css"> <!-- aqui o seu CSS -->
 </head>
 <body>
-  <div class="container">
-    <img src="logo.png" alt="Logo Soberanos" class="logo">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" id="usuario" placeholder="Usuário" required><br>
-      <input type="password" id="senha" placeholder="Senha" required><br>
-      <select id="tipoUsuario" required>
-        <option value="">Selecione o tipo</option>
-        <option value="adm">Login ADM</option>
-        <option value="membro">Login Membro</option>
-      </select><br><br>
-      <button type="submit">Entrar</button>
-    </form>
-    <p class="acesso-link">
-      Não é membro? <a href="https://www.instagram.com/ss_soberanos?igsh=b25zYmcyOThxcGM3" target="_blank">Faça parte</a>
-    </p>
-  </div>
-  <script src="script.js"></script>
+
+  <img src="logo.png" alt="Logo Soberanos" style="max-width: 150px;"> <!-- Substitua pelo nome correto da logo -->
+
+  <h1>Login</h1>
+
+  <form id="loginForm">
+    <input type="text" id="usuario" placeholder="Usuário"><br>
+    <input type="password" id="senha" placeholder="Senha"><br>
+    
+    <select id="tipoUsuario">
+      <option value="adm">Login ADM</option>
+      <option value="membro">Login Membro</option>
+    </select><br><br>
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <p>Não é membro? <a href="https://www.instagram.com/ss_soberanos" target="_blank">Faça parte</a></p>
+
+  <script src="script.js"></script> <!-- aqui o seu JS -->
 </body>
 </html>
