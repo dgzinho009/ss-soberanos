@@ -1,1 +1,25 @@
+const users = {
+    'dgzinho009': { role: 'lider' },
+    'lkadm001': { role: 'lider' },
+    'ADM007': { role: 'adm' }
+};
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const login = document.getElementById('login').value.trim();
+
+    if (users[login]) {
+        if (users[login].role === 'lider') {
+            alert('Olá meu líder, seja bem-vindo');
+        } else if (users[login].role === 'adm') {
+            alert('E aí, administrador, seja bem-vindo ao seu painel');
+        }
+    } else {
+        alert('ID INCORRETO, OU VOCÊ NÃO PERTENCE À GUILDA AINDA\n\nSe torne membro agora!');
+    }
+});
+
+function esqueciLogin() {
+    alert('Entre em contato com o suporte ou com um dos líderes da guilda.');
+}
 
