@@ -50,6 +50,7 @@
     .content {
       flex: 1;
       padding: 30px;
+      overflow-y: auto;
     }
 
     .section {
@@ -95,6 +96,7 @@
         <p>ID: SSDG001</p>
         <p>Guilda: Soberanos</p>
         <p>Membros: 47/50</p>
+        <p>Status: Ativa e em evolução constante.</p>
       </div>
 
       <div id="alterar-info" class="section">
@@ -151,10 +153,22 @@
       document.getElementById(id).classList.add('active');
     }
 
-    // Verificação de login pelo parâmetro
     const user = new URLSearchParams(window.location.search).get('user');
-    if (user !== 'SSDG001' && user !== 'LK001') {
-      window.location.href = "index.html";
+
+    if (!user) {
+      document.body.innerHTML = `
+        <div style="padding: 50px; color: white; background: #111; text-align: center;">
+          <h2>ID não informado</h2>
+          <p>Você precisa fazer login primeiro.</p>
+          <a href="index.html" style="color: #1e90ff;">Voltar ao login</a>
+        </div>`;
+    } else if (user !== 'SSDG001' && user !== 'LK001') {
+      document.body.innerHTML = `
+        <div style="padding: 50px; color: white; background: #111; text-align: center;">
+          <h2>ID não autorizado</h2>
+          <p>Este ID não tem acesso ao painel.</p>
+          <a href="index.html" style="color: #1e90ff;">Voltar ao login</a>
+        </div>`;
     }
   </script>
 </body>
