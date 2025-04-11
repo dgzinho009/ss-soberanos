@@ -1,26 +1,87 @@
-<!-- painel.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel Soberanos</title>
+  <title>Painel da Guilda - Soberanos</title>
   <style>
     body {
-      background: #121212;
+      background: linear-gradient(to right, #0f0f0f, #1a1a1a);
       color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
+      padding: 30px;
     }
-
+    .painel {
+      max-width: 700px;
+      margin: auto;
+      background: #222;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
     h1 {
+      text-align: center;
+      color: #1e90ff;
+    }
+    .info {
+      margin: 20px 0;
+    }
+    .info strong {
+      color: #1e90ff;
+    }
+    .btn-group {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    button {
+      padding: 10px;
+      background-color: #1e90ff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #aaa;
+    }
+    a {
       color: #1e90ff;
     }
   </style>
 </head>
 <body>
-  <h1>Bem-vindo ao Painel da Guilda Soberanos</h1>
-  <p>Acesso liberado com sucesso!</p>
+  <div class="painel">
+    <h1>Painel ADM - Guilda Soberanos</h1>
+    <div class="info">
+      <p><strong>Guilda:</strong> Soberanos</p>
+      <p><strong>Líder:</strong> SS DG (ID: SSDG001)</p>
+      <p><strong>Sub-líder:</strong> LK (ID: LK001)</p>
+      <p><strong>ID da Guilda:</strong> 123456789</p>
+      <p><strong>Membros:</strong> 47/50</p>
+      <p><strong>Status:</strong> Guerra ativa hoje às 20h | Recrutamento fechado</p>
+    </div>
+
+    <div class="btn-group">
+      <button onclick="alert('Função em desenvolvimento: Adicionar novos IDs')">+ Adicionar Novo ID</button>
+      <button onclick="alert('Função em desenvolvimento: Editar informações da guilda')">Editar Informações</button>
+    </div>
+  </div>
+
+  <footer>
+    Em caso de dúvidas, entre em contato no <a href="https://instagram.com/soberanosff" target="_blank">@soberanosff</a>
+  </footer>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const user = urlParams.get('user');
+
+    if (user !== "SSDG001" && user !== "LK001") {
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
