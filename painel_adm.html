@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel do ADM</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Painel ADM - Soberanos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1>Painel Administrativo</h1>
-    <p>Gerencie os membros da guilda:</p>
 
-    <h2>Ranking da Guilda</h2>
-    <ul class="member-list">
-      <li>Jogador 1 - 1520 pontos</li>
-      <li>Jogador 2 - 1380 pontos</li>
-      <li>Jogador 3 - 1250 pontos</li>
-    </ul>
-
-    <h2>Criar Chave de Acesso para Membro</h2>
-    <form>
-      <input type="text" placeholder="Nome do Membro" />
-      <input type="text" placeholder="Função (Arrochador, Suporte...)" />
-      <button class="btn">Criar Chave</button>
+    <h2>Criar novo membro</h2>
+    <form id="formCriarMembro">
+      <input type="text" id="nomeMembro" placeholder="Nome do Membro" required>
+      <select id="funcaoMembro">
+        <option value="Rushador">Rushador</option>
+        <option value="Arrochador">Arrochador</option>
+        <option value="Suporte">Suporte</option>
+        <option value="Atirador">Atirador</option>
+      </select>
+      <button type="submit">Criar Membro</button>
     </form>
 
-    <a class="btn" href="index.html">Sair</a>
+    <h2>Membros Cadastrados</h2>
+    <ul id="listaMembros"></ul>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
