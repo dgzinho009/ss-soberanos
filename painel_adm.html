@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Painel ADM - Soberanos</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do ADM</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body onload="verificarAcesso('adm'); mostrarPerfil();">
+<body>
   <div class="container">
-    <h1>Bem-vindo, <span id="nomeUsuario"></span> (ADM)</h1>
-    <p>Função: <span id="funcaoUsuario"></span></p>
-    
-    <h2>Ferramentas administrativas</h2>
-    <ul>
-      <li>Editar ranking</li>
-      <li>Gerenciar membros</li>
-      <li>Publicar avisos</li>
+    <h1>Painel Administrativo</h1>
+    <p>Gerencie os membros da guilda:</p>
+
+    <h2>Ranking da Guilda</h2>
+    <ul class="member-list">
+      <li>Jogador 1 - 1520 pontos</li>
+      <li>Jogador 2 - 1380 pontos</li>
+      <li>Jogador 3 - 1250 pontos</li>
     </ul>
 
-    <a href="index.html">Sair</a>
+    <h2>Criar Chave de Acesso para Membro</h2>
+    <form>
+      <input type="text" placeholder="Nome do Membro" />
+      <input type="text" placeholder="Função (Arrochador, Suporte...)" />
+      <button class="btn">Criar Chave</button>
+    </form>
+
+    <a class="btn" href="index.html">Sair</a>
   </div>
 </body>
 </html>
