@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - Soberanos</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Guilda Soberanos</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Bem-vindo à Guilda Soberanos</h1>
+  <div class="login-container">
+    <h2>Entrar na Guilda</h2>
     <form id="loginForm">
-      <input type="text" id="usuario" placeholder="Seu nome" required>
+      <input type="text" id="usuario" placeholder="Código de Acesso" required />
       <select id="tipoUsuario">
-        <option value="">Selecione o tipo de acesso</option>
-        <option value="adm">ADM</option>
+        <option value="">Selecione o tipo</option>
+        <option value="adm">Administrador</option>
         <option value="membro">Membro</option>
       </select>
       <button type="submit">Entrar</button>
     </form>
-
-    <p>Não é membro? <a href="https://www.instagram.com/ss_soberanos" target="_blank">Faça parte agora</a></p>
+    <p id="loginError" class="error-msg"></p>
   </div>
 
   <script src="script.js"></script>
