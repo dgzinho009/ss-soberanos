@@ -1,44 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soberanos - Painel</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Soberanos - Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <img src="logo.png" alt="Logo Soberanos" class="logo" />
-    <h1>Bem-vindo ao Painel da Guilda Soberanos</h1>
-
-    <div id="login">
-      <input type="text" id="userId" placeholder="Digite seu ID de membro" />
-      <button onclick="login()">Entrar</button>
-      <p class="not-member">
-        Não é membro?
-        <a href="https://www.instagram.com/ss_soberanos?igsh=b25zYmcyOThxcGM3" target="_blank">Faça parte agora</a>
-      </p>
-    </div>
-
-    <div id="dashboard" style="display: none;">
-      <h2 id="welcomeMsg"></h2>
-      <div id="userRole"></div>
-
-      <div id="sensiGenerator">
-        <h3>Gerador de Sensibilidade</h3>
-        <input type="text" id="device" placeholder="Modelo do Celular" />
-        <button onclick="generateSensitivity()">Gerar Sensibilidade</button>
-        <div id="sensitivityResult"></div>
-      </div>
-
-      <div id="ranking">
-        <h3>Ranking da Guilda</h3>
-        <!-- Aqui entraria o ranking dos membros (exibido apenas) -->
-        <p>[Ranking atualizado aparecerá aqui]</p>
-      </div>
-    </div>
+    <img src="logo.png" alt="Logo Soberanos" class="logo">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="usuario" placeholder="Usuário" required><br>
+      <input type="password" id="senha" placeholder="Senha" required><br>
+      <select id="tipoUsuario" required>
+        <option value="">Selecione o tipo</option>
+        <option value="adm">Login ADM</option>
+        <option value="membro">Login Membro</option>
+      </select><br><br>
+      <button type="submit">Entrar</button>
+    </form>
+    <p class="acesso-link">
+      Não é membro? <a href="https://www.instagram.com/ss_soberanos?igsh=b25zYmcyOThxcGM3" target="_blank">Faça parte</a>
+    </p>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
