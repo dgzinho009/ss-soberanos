@@ -3,28 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Login - Soberanos</title>
-  <link rel="stylesheet" href="style.css"> <!-- aqui o seu CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
+    <h1>Bem-vindo à Guilda Soberanos</h1>
+    <form id="loginForm">
+      <input type="text" id="usuario" placeholder="Seu nome" required>
+      <select id="tipoUsuario">
+        <option value="">Selecione o tipo de acesso</option>
+        <option value="adm">ADM</option>
+        <option value="membro">Membro</option>
+      </select>
+      <button type="submit">Entrar</button>
+    </form>
 
-  <img src="logo.png" alt="Logo Soberanos" style="max-width: 150px;"> <!-- Substitua pelo nome correto da logo -->
+    <p>Não é membro? <a href="https://www.instagram.com/ss_soberanos" target="_blank">Faça parte agora</a></p>
+  </div>
 
-  <h1>Login</h1>
-
-  <form id="loginForm">
-    <input type="text" id="usuario" placeholder="Usuário"><br>
-    <input type="password" id="senha" placeholder="Senha"><br>
-    
-    <select id="tipoUsuario">
-      <option value="adm">Login ADM</option>
-      <option value="membro">Login Membro</option>
-    </select><br><br>
-
-    <button type="submit">Entrar</button>
-  </form>
-
-  <p>Não é membro? <a href="https://www.instagram.com/ss_soberanos" target="_blank">Faça parte</a></p>
-
-  <script src="script.js"></script> <!-- aqui o seu JS -->
+  <script src="script.js"></script>
 </body>
 </html>
