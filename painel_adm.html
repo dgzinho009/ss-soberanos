@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel ADM - Soberanos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="verificarAcesso('adm'); mostrarPerfil();">
+  <div class="container">
+    <h1>Bem-vindo, <span id="nomeUsuario"></span> (ADM)</h1>
+    <p>Função: <span id="funcaoUsuario"></span></p>
+    
+    <h2>Ferramentas administrativas</h2>
+    <ul>
+      <li>Editar ranking</li>
+      <li>Gerenciar membros</li>
+      <li>Publicar avisos</li>
+    </ul>
+
+    <a href="index.html">Sair</a>
+  </div>
+</body>
+</html>
