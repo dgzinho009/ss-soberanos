@@ -1,66 +1,46 @@
 body {
-  background-color: #0e0e1a;
-  color: #f1f1f1;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #0e0e1a, #1a1a2e);
+  color: #fff;
+  font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
   padding: 0;
-  background-image: linear-gradient(to bottom right, #0e0e1a, #1a1a2e);
 }
 
 .container {
-  padding: 40px 20px;
-  max-width: 1000px;
-  margin: auto;
+  padding: 30px;
 }
 
 .logo {
-  max-width: 180px;
-  margin-bottom: 25px;
-  filter: drop-shadow(0 0 10px #ffd700);
+  max-width: 150px;
+  margin-bottom: 20px;
 }
 
-h1, h2, h3 {
-  color: #ffd700;
-  text-shadow: 0 0 5px #333;
-}
-
-.button {
-  background-color: #ffd700;
-  color: #0e0e1a;
-  padding: 12px 24px;
-  margin: 15px 5px;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.button:hover {
-  background-color: #e6c200;
-}
-
-.card {
-  background-color: #1a1a2e;
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-}
-
-input[type="text"], input[type="password"], textarea, select {
-  background-color: #2e2e42;
-  color: #fff;
-  border: 1px solid #444;
+input, button {
   padding: 10px;
-  border-radius: 6px;
-  width: 100%;
-  margin: 10px 0;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
 }
 
-footer {
-  margin-top: 50px;
-  font-size: 14px;
-  color: #888;
+input {
+  width: 250px;
+}
+
+button {
+  background-color: #ffd700;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#sensitivityResult {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #ffd700;
+}
+
+.not-member a {
+  color: #ffd700;
+  text-decoration: none;
 }
