@@ -10,7 +10,6 @@
   <div class="painel-container">
     <h2>Bem-vindo, Membro</h2>
 
-    <!-- Seção de Estilo de Jogo -->
     <section class="estilo-jogo">
       <h3>Seu Estilo de Jogo</h3>
       <input type="text" id="novoEstilo" placeholder="Adicionar Estilo" />
@@ -18,23 +17,22 @@
       <ul id="listaEstilos"></ul>
     </section>
 
-    <!-- Seção de Justificativa -->
     <section class="justificativa">
       <h3>Motivo de Ausência (Guerra de Guilda)</h3>
       <textarea id="motivoInput" placeholder="Explique sua ausência..."></textarea>
       <button onclick="enviarMotivo()">Enviar Justificativa</button>
+      <p id="feedbackMotivo" style="color: green;"></p>
     </section>
 
-    <!-- Seção de Denúncia -->
     <section class="denuncia">
       <h3>Denúncia de Jogador</h3>
       <input type="text" id="nomeDenunciado" placeholder="Nome do jogador" />
       <textarea id="detalheDenuncia" placeholder="Explique o que aconteceu..."></textarea>
       <input type="file" id="evidenciaImagem" accept=".png,.jpg,.jpeg"/>
       <button onclick="enviarDenuncia()">Enviar Denúncia</button>
+      <p id="feedbackDenuncia" style="color: green;"></p>
     </section>
 
-    <!-- Caixa de Correio (exibe mensagens) -->
     <section class="correio">
       <h3>Caixa de Correio</h3>
       <ul id="mensagensMembro"></ul>
