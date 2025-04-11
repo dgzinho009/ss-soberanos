@@ -1,46 +1,70 @@
 body {
-  background: linear-gradient(to right, #0e0e1a, #1a1a2e);
+  background-color: #0e0e1a;
   color: #fff;
-  font-family: Arial, sans-serif;
-  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-  padding: 30px;
+  background-color: #1a1a2e;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ffff3b;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
 }
 
 .logo {
-  max-width: 150px;
+  max-width: 120px;
   margin-bottom: 20px;
 }
 
-input, button {
-  padding: 10px;
-  margin: 10px;
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
   border: none;
   border-radius: 8px;
+  font-size: 16px;
 }
 
-input {
-  width: 250px;
+input:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00ffff;
 }
 
 button {
-  background-color: #ffd700;
+  background-color: #00ffff;
   color: #000;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-#sensitivityResult {
-  margin-top: 10px;
+  border: none;
+  padding: 12px 20px;
   font-size: 16px;
-  color: #ffd700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
 }
 
-.not-member a {
-  color: #ffd700;
+button:hover {
+  background-color: #00cccc;
+}
+
+.acesso-link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.acesso-link a {
+  color: #00ffff;
   text-decoration: none;
+}
+
+.acesso-link a:hover {
+  text-decoration: underline;
 }
