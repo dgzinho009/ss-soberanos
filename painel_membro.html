@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Painel do Membro</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Bem-vindo, Membro!</h1>
-    <p>Aqui você pode visualizar as informações da guilda.</p>
+  <div class="painel-container">
+    <h2>Bem-vindo, Membro</h2>
 
-    <h2>Ranking da Guilda</h2>
-    <ul class="member-list">
-      <li>Jogador 1 - 1520 pontos</li>
-      <li>Jogador 2 - 1380 pontos</li>
-      <li>Jogador 3 - 1250 pontos</li>
-    </ul>
+    <section class="estilo-jogo">
+      <h3>Seu Estilo de Jogo</h3>
+      <input type="text" id="novoEstilo" placeholder="Adicionar Estilo" />
+      <button onclick="adicionarEstilo()">Adicionar</button>
+      <ul id="listaEstilos"></ul>
+    </section>
 
-    <h2>Sua Função</h2>
-    <p>Arrochador / Suporte / Atirador</p>
+    <section class="justificativa">
+      <h3>Motivo de Ausência (Guerra de Guilda)</h3>
+      <textarea id="motivoInput" placeholder="Explique sua ausência..."></textarea>
+      <button onclick="enviarMotivo()">Enviar Justificativa</button>
+    </section>
 
-    <a class="btn" href="index.html">Sair</a>
+    <section class="denuncia">
+      <h3>Denúncia de Jogador</h3>
+      <input type="text" id="nomeDenunciado" placeholder="Nome do jogador" />
+      <textarea id="detalheDenuncia" placeholder="Explique o que aconteceu..."></textarea>
+      <input type="file" id="evidenciaImagem" accept=".png,.jpg,.jpeg"/>
+      <button onclick="enviarDenuncia()">Enviar Denúncia</button>
+    </section>
+
+    <section class="correio">
+      <h3>Caixa de Correio</h3>
+      <ul id="mensagensMembro"></ul>
+    </section>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
