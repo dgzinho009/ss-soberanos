@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,22 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soberanos FF</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px #000;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 6px;
+        }
+        button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 6px;
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .options {
+            margin-top: 20px;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.85em;
+            color: #ccc;
+        }
+        a {
+            color: #00acee;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <img src="img/logo-soberanos.jpg" alt="Logo Soberanos" class="logo" style="max-width: 200px; margin: 0 auto 20px; display: block; border-radius: 12px;">
         <h1>SOBERANOS</h1>
-        <p>BEM VINDO</p>
+        <p>Bem-vindo ao painel de login</p>
         <form id="loginForm">
-            <input type="text" id="login" placeholder="ID do Jogo ou Login" required>
-            <input type="password" id="senha" placeholder="Senha (se necessário)">
+            <input type="text" id="login" placeholder="Insira seu ID" required>
             <button type="submit">Entrar</button>
         </form>
         <div class="options">
-            <a href="#" onclick="esqueciLogin()">Esqueci a senha/login</a>
+            <p>Não tem acesso? <a href="https://instagram.com/soberanos.ff" target="_blank">Entre em contato pelo Instagram</a></p>
         </div>
-        <footer>© 2025 Soberanos - Desenvolvido por DG.</footer>
+        <footer>Soberanos FF - Todos os Direitos Reservados.</footer>
     </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>
