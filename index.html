@@ -1,109 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soberanos FF</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    body {
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
-      width: 300px;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-      font-size: 28px;
-      letter-spacing: 2px;
-    }
-
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button {
-      width: 95%;
-      padding: 10px;
-      background-color: #1e90ff;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background-color: #005ecb;
-    }
-
-    footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #ccc;
-    }
-
-    .instagram-link {
-      display: block;
-      margin-top: 10px;
-      color: #1e90ff;
-      text-decoration: none;
-    }
-
-    .instagram-link:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soberanos - Painel</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>SOBERANOS</h1>
-    <p>Bem-vindo</p>
-    <form id="loginForm">
-      <input type="text" id="login" placeholder="Insira seu ID" required>
-      <button type="submit">Entrar</button>
-    </form>
-    <footer>
-      Soberanos - Todos os Direitos Reservados.
-      <a href="https://instagram.com/soberanos.ff" target="_blank" class="instagram-link">@soberanos.ff</a>
-    </footer>
+    <img src="logo.png" alt="Logo Soberanos" class="logo" />
+    <h1>Bem-vindo ao Painel da Guilda Soberanos</h1>
+
+    <div id="login">
+      <input type="text" id="userId" placeholder="Digite seu ID de membro" />
+      <button onclick="login()">Entrar</button>
+      <p class="not-member">
+        Não é membro?
+        <a href="https://www.instagram.com/ss_soberanos?igsh=b25zYmcyOThxcGM3" target="_blank">Faça parte agora</a>
+      </p>
+    </div>
+
+    <div id="dashboard" style="display: none;">
+      <h2 id="welcomeMsg"></h2>
+      <div id="userRole"></div>
+
+      <div id="sensiGenerator">
+        <h3>Gerador de Sensibilidade</h3>
+        <input type="text" id="device" placeholder="Modelo do Celular" />
+        <button onclick="generateSensitivity()">Gerar Sensibilidade</button>
+        <div id="sensitivityResult"></div>
+      </div>
+
+      <div id="ranking">
+        <h3>Ranking da Guilda</h3>
+        <!-- Aqui entraria o ranking dos membros (exibido apenas) -->
+        <p>[Ranking atualizado aparecerá aqui]</p>
+      </div>
+    </div>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const loginInput = document.getElementById("login");
-      const login = loginInput.value.trim().toUpperCase();
-
-      // IDs autorizados
-      const idsAutorizados = ["SSDG001", "LKADM001"];
-
-      if (idsAutorizados.includes(login)) {
-        window.location.href = "painel.html";
-      } else {
-        alert("ID inválido. Tente novamente.");
-        loginInput.value = "";
-        loginInput.focus();
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
