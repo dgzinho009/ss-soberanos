@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Painel ADM - Soberanos</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
@@ -11,7 +11,7 @@
 
     <h2>Criar novo membro</h2>
     <form id="formCriarMembro">
-      <input type="text" id="nomeMembro" placeholder="Nome do Membro" required>
+      <input type="text" id="nomeMembro" placeholder="Nome do Membro" required />
       <select id="funcaoMembro">
         <option value="Rushador">Rushador</option>
         <option value="Arrochador">Arrochador</option>
@@ -24,10 +24,76 @@
     <h2>Membros Cadastrados</h2>
     <ul id="listaMembros"></ul>
 
-    <h2>Denúncias Recebidas</h2>
-    <ul id="listaDenuncias"></ul>
+    <h2>Denúncias e Justificativas Recebidas</h2>
+    <ul id="listaMensagensADM"></ul>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Membros
+    document.getElementById("formCriarMembro").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const nome = document.getElementById("nomeMembro").value.trim();
+      const funcao = document.getElementById("funcaoMembro").value;
+      if (nome) {
+        const membros = JSON.parse(localStorage.getItem("membros")) || [];
+        membros.push({ nome, funcao });
+        localStorage.setItem("membros", JSON.stringify(membros));
+        listarMembros();
+        this.reset();
+      }
+    });
+
+    function listarMembros() {
+      const lista = document.getElementById("listaMembros");
+      lista.innerHTML = "";
+      const membros = JSON.parse(localStorage.getItem("membros")) || [];
+      membros.forEach(m => {
+        const li = document.createElement("li");
+        li.textContent = `${m.nome} - ${m.funcao}`;
+        lista.appendChild(li);
+      });
+    }
+
+    // Mensagens ADM (Denúncias e Justificativas)
+    function carregarMensagensADM() {
+      const mensagens = JSON.parse(localStorage.getItem("mensagensADM")) || [];
+      const lista = document.getElementById("listaMensagensADM");
+      lista.innerHTML = "";
+
+      mensagens.forEach((msg, index) => {
+        const li = document.createElement("li");
+        let conteudoHTML = "";
+
+        if (msg.tipo === "justificativa") {
+          conteudoHTML = `
+            <strong>Justificativa de ausência</strong><br>
+            ${msg.conteudo}<br>
+            <em>${msg.data}</em>
+          `;
+        } else if (msg.tipo === "denuncia") {
+          conteudoHTML = `
+            <strong>Denúncia contra:</strong> ${msg.nome}<br>
+            <strong>Detalhes:</strong> ${msg.detalhes}<br>
+            ${msg.imagem ? `<strong>Evidência:</strong><br><a href="${msg.imagem}" target="_blank"><img src="${msg.imagem}" style="max-width:100px; max-height:100px;"></a><br>` : ""}
+            <em>${msg.data}</em><br>
+            <button onclick="criarAcao(${index})">Criar Ação</button>
+          `;
+        }
+
+        li.innerHTML = conteudoHTML;
+        lista.appendChild(li);
+      });
+    }
+
+    function criarAcao(index) {
+      alert("Ação criada para o item #" + index + ". (Simulação)");
+    }
+
+    // Inicialização
+    window.addEventListener("load", () => {
+      listarMembros();
+      carregarMensagensADM();
+    });
+  </script>
 </body>
 </html>
