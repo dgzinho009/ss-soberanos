@@ -1,21 +1,14 @@
-const lideres = ["SSDG001", "LKADM001"];
-const adms = ["ADM007"];
-const membrosAutorizados = ["SSDG001", "LKADM001", "ADM007"]; // IDs com acesso inicial
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+  event.preventDefault();
 
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const login = document.getElementById("login").value.trim();
+  const login = document.getElementById("login").value.trim().toUpperCase();
 
-    if (lideres.includes(login)) {
-        alert("Olá, meu líder! Seja bem-vindo ao seu painel.");
-        window.location.href = "painel_lider.html"; // página especial do líder
-    } else if (adms.includes(login)) {
-        alert("E aí Administrador, seja bem-vindo ao seu painel.");
-        window.location.href = "painel_adm.html"; // painel dos ADM normais
-    } else if (membrosAutorizados.includes(login)) {
-        alert("Bem-vindo ao sistema da Soberanos!");
-        window.location.href = "painel_membro.html"; // painel padrão
-    } else {
-        alert("Acesso negado. Entre em contato pelo nosso Instagram @guildasoberanos");
-    }
+  // IDs permitidos (garanta que estão exatamente iguais aos que você quer)
+  const idsAutorizados = ["SSDG001", "LKADM001"]; // pode adicionar mais aqui
+
+  if (idsAutorizados.includes(login)) {
+    window.location.href = "painel.html"; // redireciona pro painel
+  } else {
+    alert("ID inválido. Tente novamente.");
+  }
 });
