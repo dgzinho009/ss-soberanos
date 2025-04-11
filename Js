@@ -1,47 +1,18 @@
-const membros = {
-  "12345": { nome: "Naruto", role: "Atirador", acesso: "membro" },
-  "00001": { nome: "DG", role: "Líder Interino", acesso: "admin" },
-  "00002": { nome: "LK", role: "Líder Geral", acesso: "admin" },
-};
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-async function login() {
-  const id = document.getElementById("userId").value.trim();
-  const user = membros[id];
+  const usuario = document.getElementById("usuario").value;
+  const senha = document.getElementById("senha").value;
+  const tipo = document.getElementById("tipoUsuario").value;
 
-  if (user) {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    document.getElementById("welcomeMsg").textContent = `Salve, ${user.nome}`;
-    document.getElementById("userRole").innerHTML = `<strong>Função:</strong> ${user.role}`;
-    
-    if (user.acesso !== "admin") {
-      document.querySelector("#sensiGenerator").style.display = "none";
+  // Simples verificação de exemplo
+  if (usuario && senha && tipo) {
+    if (tipo === "adm") {
+      window.location.href = "painel_adm.html";
+    } else if (tipo === "membro") {
+      window.location.href = "painel_membro.html";
     }
   } else {
-    alert("ID não encontrado. Verifique com um líder.");
+    alert("Preencha todos os campos corretamente.");
   }
-}
-
-async function generateSensitivity() {
-  const device = document.getElementById("device").value.trim();
-  if (!device) return alert("Informe seu modelo de celular.");
-
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer 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",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "gpt-4o",
-      messages: [
-        { role: "user", content: `Me recomenda uma sensibilidade para jogar Free Fire no celular modelo ${device}.` }
-      ]
-    })
-  });
-
-  const data = await response.json();
-  const result = data.choices?.[0]?.message?.content || "Não foi possível gerar sensibilidade.";
-
-  document.getElementById("sensitivityResult").textContent = result;
-}
+});
