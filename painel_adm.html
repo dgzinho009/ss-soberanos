@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Painel ADM - Soberanos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,7 +12,13 @@
 
     <h2>Criar novo membro</h2>
     <form id="formCriarMembro">
-      <input type="text" id="nomeMembro" placeholder="Nome do Membro" required />
+      <input
+        type="text"
+        id="nomeMembro"
+        placeholder="Nome do Membro"
+        required
+        minlength="3"
+      />
       <select id="funcaoMembro">
         <option value="Rushador">Rushador</option>
         <option value="Arrochador">Arrochador</option>
@@ -29,67 +36,114 @@
   </div>
 
   <script>
-    // Membros
-    document.getElementById("formCriarMembro").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const nome = document.getElementById("nomeMembro").value.trim();
-      const funcao = document.getElementById("funcaoMembro").value;
-      if (nome) {
-        const membros = JSON.parse(localStorage.getItem("membros")) || [];
-        membros.push({ nome, funcao });
-        localStorage.setItem("membros", JSON.stringify(membros));
-        listarMembros();
-        this.reset();
-      }
-    });
+    // Função genérica para criar elementos
+    function criarElemento(tag, conteudo = "", atributos = {}) {
+      const elemento = document.createElement(tag);
+      if (conteudo) elemento.innerHTML = conteudo;
+      Object.keys(atributos).forEach((chave) =>
+        elemento.setAttribute(chave, atributos[chave])
+      );
+      return elemento;
+    }
 
+    // Inicializar membros ao carregar a página
     function listarMembros() {
       const lista = document.getElementById("listaMembros");
       lista.innerHTML = "";
-      const membros = JSON.parse(localStorage.getItem("membros")) || [];
-      membros.forEach(m => {
-        const li = document.createElement("li");
-        li.textContent = `${m.nome} - ${m.funcao}`;
-        lista.appendChild(li);
-      });
+      try {
+        const membros = JSON.parse(localStorage.getItem("membros")) || [];
+        membros.forEach((membro) => {
+          const li = criarElemento(
+            "li",
+            `${membro.nome} - ${membro.funcao}`
+          );
+          lista.appendChild(li);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar membros:", error);
+        localStorage.setItem("membros", JSON.stringify([]));
+      }
     }
 
-    // Mensagens ADM (Denúncias e Justificativas)
+    // Criar novo membro
+    document
+      .getElementById("formCriarMembro")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        const nome = document
+          .getElementById("nomeMembro")
+          .value.trim();
+        const funcao = document.getElementById("funcaoMembro").value;
+
+        // Validação do nome
+        if (!nome || nome.length < 3) {
+          alert("O nome do membro deve ter pelo menos 3 caracteres!");
+          return;
+        }
+
+        try {
+          const membros = JSON.parse(localStorage.getItem("membros")) || [];
+          membros.push({ nome, funcao });
+          localStorage.setItem("membros", JSON.stringify(membros));
+          listarMembros();
+          this.reset();
+          alert("Membro criado com sucesso!");
+        } catch (error) {
+          console.error("Erro ao salvar membro:", error);
+          alert("Ocorreu um erro ao salvar o membro.");
+        }
+      });
+
+    // Carregar mensagens (justificativas e denúncias)
     function carregarMensagensADM() {
-      const mensagens = JSON.parse(localStorage.getItem("mensagensADM")) || [];
       const lista = document.getElementById("listaMensagensADM");
       lista.innerHTML = "";
 
-      mensagens.forEach((msg, index) => {
-        const li = document.createElement("li");
-        let conteudoHTML = "";
+      try {
+        const mensagens =
+          JSON.parse(localStorage.getItem("mensagensADM")) || [];
+        mensagens.forEach((msg, index) => {
+          const li = criarElemento("li");
+          let conteudoHTML = "";
 
-        if (msg.tipo === "justificativa") {
-          conteudoHTML = `
-            <strong>Justificativa de ausência</strong><br>
-            ${msg.conteudo}<br>
-            <em>${msg.data}</em>
-          `;
-        } else if (msg.tipo === "denuncia") {
-          conteudoHTML = `
-            <strong>Denúncia contra:</strong> ${msg.nome}<br>
-            <strong>Detalhes:</strong> ${msg.detalhes}<br>
-            ${msg.imagem ? `<strong>Evidência:</strong><br><a href="${msg.imagem}" target="_blank"><img src="${msg.imagem}" style="max-width:100px; max-height:100px;"></a><br>` : ""}
-            <em>${msg.data}</em><br>
-            <button onclick="criarAcao(${index})">Criar Ação</button>
-          `;
-        }
+          if (msg.tipo === "justificativa") {
+            conteudoHTML = `
+              <strong>Justificativa de ausência</strong><br>
+              ${msg.conteudo}<br>
+              <em>${msg.data}</em>
+            `;
+          } else if (msg.tipo === "denuncia") {
+            conteudoHTML = `
+              <strong>Denúncia contra:</strong> ${msg.nome}<br>
+              <strong>Detalhes:</strong> ${msg.detalhes}<br>
+              ${
+                msg.imagem
+                  ? `<strong>Evidência:</strong><br>
+                  <a href="${msg.imagem}" target="_blank">
+                    <img src="${msg.imagem}" style="max-width:100px; max-height:100px;">
+                  </a><br>`
+                  : ""
+              }
+              <em>${msg.data}</em><br>
+              <button onclick="criarAcao(${index})">Criar Ação</button>
+            `;
+          }
 
-        li.innerHTML = conteudoHTML;
-        lista.appendChild(li);
-      });
+          li.innerHTML = conteudoHTML;
+          lista.appendChild(li);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar mensagens:", error);
+        alert("Não foi possível carregar as mensagens.");
+      }
     }
 
+    // Simulação de criação de ação
     function criarAcao(index) {
       alert("Ação criada para o item #" + index + ". (Simulação)");
     }
 
-    // Inicialização
+    // Inicialização ao carregar a página
     window.addEventListener("load", () => {
       listarMembros();
       carregarMensagensADM();
