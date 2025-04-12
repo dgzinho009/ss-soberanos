@@ -1,57 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel Administrativo</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    aside {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+    }
+
+    aside h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    aside ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    aside ul li {
+      margin-bottom: 15px;
+    }
+
+    aside ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+    }
+
+    aside ul li a:hover {
+      color: #1abc9c;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div class="painel-container">
-    <h2>Painel Administrativo</h2>
+  <!-- Menu Lateral -->
+  <aside>
+    <h2>Menu ADM</h2>
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#membros">Membros</a></li>
+      <ul>
+        <li><a href="#criarMembro">Criar Novo Membro</a></li>
+        <li><a href="#listarMembros">Listar Todos os Membros</a></li>
+      </ul>
+      <li><a href="#mensagens">Mensagens dos Membros</a></li>
+      <ul>
+        <li><a href="#justificativas">Ver Justificativas</a></li>
+        <li><a href="#denuncias">Ver Denúncias</a></li>
+      </ul>
+      <li><a href="#eventos">Eventos e Torneios</a></li>
+      <li><a href="#ranking">Ranking</a></li>
+      <li><a href="#configuracoes">Configurações</a></li>
+      <ul>
+        <li><a href="#dadosPainel">Dados do Painel</a></li>
+        <li><a href="#logout">Logout</a></li>
+      </ul>
+    </ul>
+  </aside>
 
-    <section class="gerar-chave">
-      <h3>Gerar Chave de Acesso</h3>
-      <button onclick="gerarChave()">Gerar Nova Chave</button>
-      <ul id="listaChaves"></ul>
-    </section>
-  </div>
-
-  <script>
-    // Função para gerar uma nova chave
-    function gerarChave() {
-      const novaChave = "chave-" + Math.random().toString(36).substr(2, 8); // Gera chave aleatória
-      const chaves = JSON.parse(localStorage.getItem("chavesAcesso")) || [];
-      chaves.push(novaChave);
-      localStorage.setItem("chavesAcesso", JSON.stringify(chaves));
-
-      carregarChaves();
-      alert("Nova chave gerada: " + novaChave);
-    }
-
-    // Função para carregar as chaves na lista
-    function carregarChaves() {
-      const lista = document.getElementById("listaChaves");
-      const chaves = JSON.parse(localStorage.getItem("chavesAcesso")) || [];
-      lista.innerHTML = "";
-
-      chaves.forEach((chave, index) => {
-        const li = document.createElement("li");
-        li.textContent = chave;
-        const btnExcluir = document.createElement("button");
-        btnExcluir.textContent = "Excluir";
-        btnExcluir.onclick = function () {
-          chaves.splice(index, 1);
-          localStorage.setItem("chavesAcesso", JSON.stringify(chaves));
-          carregarChaves();
-        };
-        li.appendChild(btnExcluir);
-        lista.appendChild(li);
-      });
-    }
-
-    // Carregar as chaves ao abrir o painel
-    document.addEventListener("DOMContentLoaded", carregarChaves);
-  </script>
+  <!-- Conteúdo Principal -->
+  <main>
+    <h1>Bem-vindo ao Painel Administrativo</h1>
+    <p>Escolha uma opção no menu lateral para começar.</p>
+  </main>
 </body>
 </html>
