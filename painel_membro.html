@@ -1,48 +1,80 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel do Membro</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    aside {
+      width: 250px;
+      background-color: #34495e;
+      color: white;
+      padding: 20px;
+    }
+
+    aside h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    aside ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    aside ul li {
+      margin-bottom: 15px;
+    }
+
+    aside ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+    }
+
+    aside ul li a:hover {
+      color: #e67e22;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div class="painel-container">
-    <h2>Bem-vindo, Membro</h2>
+  <!-- Menu Lateral -->
+  <aside>
+    <h2>Menu Membro</h2>
+    <ul>
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#estilo">Meu Estilo de Jogo</a></li>
+      <ul>
+        <li><a href="#adicionarEstilo">Adicionar Estilo</a></li>
+        <li><a href="#verEstilos">Ver Estilos Salvos</a></li>
+      </ul>
+      <li><a href="#justificativas">Justificativas</a></li>
+      <li><a href="#denuncia">Denúncia</a></li>
+      <li><a href="#sensi">Sensi</a></li>
+      <li><a href="#eventos">Eventos da Guilda</a></li>
+      <li><a href="#configuracoes">Configurações</a></li>
+    </ul>
+  </aside>
 
-    <section>
-      <h3>Gerador de Sensi</h3>
-      <button onclick="gerarSensi()">Gerar Sensi</button>
-      <p id="resultadoSensi"></p>
-    </section>
-
-    <section>
-      <h3>Seu Estilo de Jogo</h3>
-      <input type="text" id="novoEstilo" placeholder="Adicionar Estilo" />
-      <button onclick="adicionarEstilo()">Adicionar</button>
-      <ul id="listaEstilos"></ul>
-    </section>
-
-    <section>
-      <h3>Justificativa de Ausência</h3>
-      <textarea id="motivoInput" placeholder="Explique sua ausência..."></textarea>
-      <button onclick="enviarMotivo()">Enviar Justificativa</button>
-    </section>
-
-    <section>
-      <h3>Denúncia de Jogador</h3>
-      <input type="text" id="nomeDenunciado" placeholder="Nome do jogador" />
-      <textarea id="detalheDenuncia" placeholder="Explique o que aconteceu..."></textarea>
-      <input type="file" id="evidenciaImagem" accept=".png,.jpg,.jpeg"/>
-      <button onclick="enviarDenuncia()">Enviar Denúncia</button>
-    </section>
-
-    <section>
-      <h3>Caixa de Correio</h3>
-      <ul id="mensagensMembro"></ul>
-    </section>
-  </div>
-
-  <script src="script.js"></script>
+  <!-- Conteúdo Principal -->
+  <main>
+    <h1>Bem-vindo ao Painel do Membro</h1>
+    <p>Escolha uma opção no menu lateral para começar.</p>
+  </main>
 </body>
 </html>
