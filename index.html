@@ -18,8 +18,6 @@
         <h2>Login</h2>
         <label for="usuario">Usuário:</label>
         <input type="text" id="usuario" name="usuario" required>
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
         <button type="submit">Entrar</button>
       </form>
     </section>
@@ -34,18 +32,15 @@
       e.preventDefault();
 
       const usuario = document.getElementById("usuario").value.trim();
-      const senha = document.getElementById("senha").value.trim();
 
       // Administradores padrão
       const admins = [
-        { login: "dg_admin", senha: "admin123" },
-        { login: "lk_admin", senha: "admin123" },
+        { login: "dg_admin" },
+        { login: "lk_admin" },
       ];
 
       // Verificar se é um administrador
-      const admin = admins.find(
-        (adm) => adm.login === usuario && adm.senha === senha
-      );
+      const admin = admins.find((adm) => adm.login === usuario);
 
       if (admin) {
         alert("Login como Administrador bem-sucedido!");
@@ -57,11 +52,11 @@
       const membros = JSON.parse(localStorage.getItem("membros")) || [];
       const membro = membros.find((m) => m.nome === usuario);
 
-      if (membro && senha === "123456") {
+      if (membro) {
         alert(`Bem-vindo, ${membro.nome}!`);
         window.location.href = "painel_membro.html";
       } else {
-        alert("Usuário ou senha inválidos!");
+        alert("Usuário não encontrado!");
       }
     });
   </script>
