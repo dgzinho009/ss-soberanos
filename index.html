@@ -8,33 +8,41 @@
 </head>
 <body>
   <!-- Cabeçalho -->
-  <header>
-    <h1>Bem-vindo à Guilda Soberanos</h1>
-    <p>Explore as funcionalidades disponíveis.</p>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="https://via.placeholder.com/50" alt="Logo Guilda">
+        <span>Guilda Soberanos</span>
+      </div>
+      <nav class="navbar">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <ul class="menu" id="menu">
+          <li><a href="#home">Início</a></li>
+          <li><a href="#about">Sobre</a></li>
+          <li><a href="#members">Membros</a></li>
+          <li><a href="#contact">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Container Principal -->
-  <div class="container">
-    <!-- Menu Lateral -->
-    <aside>
-      <h2>Menu</h2>
-      <ul>
-        <li><a href="#">Início</a></li>
-        <li><a href="#">Painel Membros</a></li>
-        <li><a href="#">Painel ADM</a></li>
-      </ul>
-    </aside>
-
-    <!-- Conteúdo Principal -->
-    <main>
-      <h2>Início</h2>
-      <p>Escolha no menu as opções que deseja acessar.</p>
-    </main>
-  </div>
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Bem-vindo à Guilda Soberanos</h1>
+      <p>Domine o campo de batalha com a melhor guilda do Free Fire.</p>
+      <div class="hero-buttons">
+        <a href="#join" class="btn-primary">Entrar na Guilda</a>
+        <a href="https://instagram.com/sua_guilda" target="_blank" class="btn-secondary">Nosso Instagram</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Rodapé -->
-  <footer>
-    <p>&copy; 2025 Guilda Soberanos</p>
+  <footer class="footer">
+    <p>&copy; 2025 Guilda Soberanos. Todos os direitos reservados.</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
