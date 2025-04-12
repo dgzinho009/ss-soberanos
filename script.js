@@ -1,34 +1,57 @@
-// LOGIN SIMPLES
 document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("btnLogin");
+  const usuarioInput = document.getElementById("usuario");
+
+  // Preencher login salvo
+  if (usuarioInput && localStorage.getItem("usuarioSalvo")) {
+    usuarioInput.value = localStorage.getItem("usuarioSalvo");
+  }
 
   if (loginBtn) {
     loginBtn.addEventListener("click", () => {
-      const usuario = document.getElementById("usuario").value.trim().toLowerCase();
+      const usuario = usuarioInput.value.trim().toLowerCase();
       const senha = document.getElementById("senha").value;
 
-      // Usuários ADM
+      // Salvar login
+      localStorage.setItem("usuarioSalvo", usuario);
+
       if ((usuario === "dg" || usuario === "lk") && senha === "admin123") {
         localStorage.setItem("usuarioTipo", "adm");
         window.location.href = "doindic.html";
-      }
-      // Usuários Membros
-      else if (senha === "123") {
+      } else if (senha === "123") {
         localStorage.setItem("usuarioTipo", "membro");
         window.location.href = "doindic.html";
-      }
-      // Login inválido
-      else {
+      } else {
         alert("Usuário ou senha inválidos!");
       }
     });
   }
 
-  // CARREGAR DADOS DO LOCALSTORAGE (Membros/Estilos/etc.)
   carregarMembros();
   carregarEstilos();
   carregarMensagens();
 });
+
+// Função para gerar sensibilidade usando API
+function gerarSensi() {
+  fetch("https://sensibilidadeapi.vercel.app/api")
+    .then(res => res.json())
+    .then(data => {
+      const texto = `
+        DPI: ${data.dpi}
+        Geral: ${data.geral}
+        Mira Red Dot: ${data.redDot}
+        Mira 2x: ${data.mira2x}
+        Mira 4x: ${data.mira4x}
+        AWM: ${data.awm}
+        Olhadinha: ${data.olhadinha}
+      `;
+      document.getElementById("resultadoSensi").innerText = texto;
+    })
+    .catch(() => {
+      document.getElementById("resultadoSensi").innerText = "Erro ao gerar sensi.";
+    });
+}
 
 // PAINEL ADM - CRIAR MEMBRO
 const formCriarMembro = document.getElementById("formCriarMembro");
@@ -130,7 +153,7 @@ function enviarDenuncia() {
   }
 }
 
-// PAINEL ADM - VER MENSAGENS
+// PAINEL ADM E MEMBRO - VER MENSAGENS
 function carregarMensagens() {
   const lista = document.getElementById("mensagensMembro");
   if (lista) {
@@ -150,4 +173,4 @@ function carregarMensagens() {
       lista.appendChild(li);
     });
   }
-}
+    }
