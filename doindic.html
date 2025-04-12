@@ -12,21 +12,26 @@
 
     <section class="estilo-jogo">
       <h3>Seu Estilo de Jogo</h3>
-      <input type="text" id="novoEstilo" placeholder="Adicionar Estilo" />
+      <label for="novoEstilo">Adicionar Estilo</label>
+      <input type="text" id="novoEstilo" placeholder="Adicionar Estilo" required />
       <button onclick="adicionarEstilo()">Adicionar</button>
       <ul id="listaEstilos"></ul>
     </section>
 
     <section class="justificativa">
       <h3>Motivo de Ausência (Guerra de Guilda)</h3>
-      <textarea id="motivoInput" placeholder="Explique sua ausência..."></textarea>
+      <label for="motivoInput">Explique sua ausência</label>
+      <textarea id="motivoInput" placeholder="Explique sua ausência..." required></textarea>
       <button onclick="enviarMotivo()">Enviar Justificativa</button>
     </section>
 
     <section class="denuncia">
       <h3>Denúncia de Jogador</h3>
-      <input type="text" id="nomeDenunciado" placeholder="Nome do jogador" />
-      <textarea id="detalheDenuncia" placeholder="Explique o que aconteceu..."></textarea>
+      <label for="nomeDenunciado">Nome do jogador</label>
+      <input type="text" id="nomeDenunciado" placeholder="Nome do jogador" required />
+      <label for="detalheDenuncia">Detalhes do ocorrido</label>
+      <textarea id="detalheDenuncia" placeholder="Explique o que aconteceu..." required></textarea>
+      <label for="evidenciaImagem">Evidência (opcional)</label>
       <input type="file" id="evidenciaImagem" accept=".png,.jpg,.jpeg"/>
       <button onclick="enviarDenuncia()">Enviar Denúncia</button>
     </section>
@@ -37,6 +42,75 @@
     </section>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Função para adicionar estilo de jogo
+    function adicionarEstilo() {
+      const novoEstilo = document.getElementById("novoEstilo").value.trim();
+      if (!novoEstilo) {
+        alert("Por favor, insira um estilo de jogo.");
+        return;
+      }
+
+      const listaEstilos = document.getElementById("listaEstilos");
+      const li = document.createElement("li");
+      li.textContent = novoEstilo;
+      listaEstilos.appendChild(li);
+
+      document.getElementById("novoEstilo").value = ""; // Limpar o campo
+      alert("Estilo adicionado com sucesso!");
+    }
+
+    // Função para enviar justificativa
+    function enviarMotivo() {
+      const motivo = document.getElementById("motivoInput").value.trim();
+      if (!motivo) {
+        alert("Por favor, explique sua ausência.");
+        return;
+      }
+
+      alert("Justificativa enviada com sucesso!");
+      document.getElementById("motivoInput").value = ""; // Limpar o campo
+    }
+
+    // Função para enviar denúncia
+    function enviarDenuncia() {
+      const nomeDenunciado = document.getElementById("nomeDenunciado").value.trim();
+      const detalheDenuncia = document.getElementById("detalheDenuncia").value.trim();
+      const evidenciaImagem = document.getElementById("evidenciaImagem").files[0];
+
+      if (!nomeDenunciado || !detalheDenuncia) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      // Simulação de envio de denúncia
+      alert("Denúncia enviada com sucesso!");
+
+      // Limpar os campos
+      document.getElementById("nomeDenunciado").value = "";
+      document.getElementById("detalheDenuncia").value = "";
+      document.getElementById("evidenciaImagem").value = "";
+    }
+
+    // Função para carregar mensagens simuladas
+    function carregarMensagens() {
+      const mensagens = [
+        "Bem-vindo ao painel!",
+        "Não se esqueça de participar da próxima guerra de guildas.",
+      ];
+
+      const listaMensagens = document.getElementById("mensagensMembro");
+      listaMensagens.innerHTML = ""; // Limpar lista
+
+      mensagens.forEach((msg) => {
+        const li = document.createElement("li");
+        li.textContent = msg;
+        listaMensagens.appendChild(li);
+      });
+    }
+
+    // Inicializar o painel ao carregar a página
+    window.addEventListener("load", carregarMensagens);
+  </script>
 </body>
 </html>
