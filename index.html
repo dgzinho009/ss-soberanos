@@ -3,22 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login Guilda Soberanos</title>
+  <title>Login - Painel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="login-container">
-    <h2>Entrar na Guilda</h2>
-    <form id="loginForm">
-      <input type="text" id="usuario" placeholder="Código de Acesso" required />
-      <select id="tipoUsuario">
-        <option value="">Selecione o tipo</option>
-        <option value="adm">Administrador</option>
-        <option value="membro">Membro</option>
-      </select>
-      <button type="submit">Entrar</button>
-    </form>
-    <p id="loginError" class="error-msg"></p>
+    <h2>Login do Painel</h2>
+    <input type="text" id="usuario" placeholder="Nome de usuário" />
+    <input type="password" id="senha" placeholder="Senha" />
+    <button id="btnLogin">Entrar</button>
   </div>
 
   <script src="script.js"></script>
