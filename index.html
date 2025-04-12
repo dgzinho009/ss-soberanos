@@ -3,62 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Guilda Free Fire</title>
+  <title>Guilda Soberanos</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Bem-vindo à Guilda Free Fire</h1>
-    <p>Faça login para acessar o painel</p>
+    <h1>Bem-vindo à Guilda Soberanos</h1>
+    <p>Explore as funcionalidades disponíveis.</p>
   </header>
 
   <main>
     <section>
-      <form id="loginForm">
-        <h2>Login</h2>
-        <label for="usuario">Nome de Usuário:</label>
-        <input type="text" id="usuario" name="usuario" placeholder="Digite seu nome de usuário" required>
-        <button type="submit">Entrar</button>
-      </form>
+      <h2>Início</h2>
+      <p>Escolha no menu as opções que deseja acessar.</p>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Guilda Free Fire</p>
+    <p>&copy; 2025 Guilda Soberanos</p>
   </footer>
-
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const usuario = document.getElementById("usuario").value.trim();
-
-      // Administradores padrão
-      const admins = [
-        { login: "dg_admin" },
-        { login: "lk_admin" },
-      ];
-
-      // Verificar se é um administrador
-      const admin = admins.find((adm) => adm.login === usuario);
-
-      if (admin) {
-        alert("Login como Administrador bem-sucedido!");
-        window.location.href = "painel_adm.html";
-        return;
-      }
-
-      // Verificar se é um membro
-      const membros = JSON.parse(localStorage.getItem("membros")) || [];
-      const membro = membros.find((m) => m.nome === usuario);
-
-      if (membro) {
-        alert(`Bem-vindo, ${membro.nome}!`);
-        window.location.href = "painel_membro.html";
-      } else {
-        alert("Usuário não encontrado!");
-      }
-    });
-  </script>
 </body>
 </html>
