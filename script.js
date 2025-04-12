@@ -1,89 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Script carregado com sucesso!");
+  const menuLinks = document.querySelectorAll("aside ul li a");
+  const mainContent = document.querySelector("main");
 
-  // Botões de Logout
-  const logoutBtns = document.querySelectorAll("#logout, #logoutBtn");
-  logoutBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (confirm("Você realmente deseja desconectar?")) {
-        alert("Você será desconectado!");
-        window.location.href = "index.html";
+  // Adiciona eventos de clique a cada link do menu
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault(); // Evita o redirecionamento padrão
+
+      // Remove a classe ativa de todos os links
+      menuLinks.forEach((link) => link.classList.remove("active"));
+
+      // Adiciona a classe ativa ao link clicado
+      link.classList.add("active");
+
+      // Carrega o conteúdo correspondente com base no href do link
+      const page = link.getAttribute("href");
+      if (page === "index.html") {
+        mainContent.innerHTML = `
+          <h2>Início</h2>
+          <p>Escolha no menu as opções que deseja acessar.</p>
+        `;
+      } else if (page === "painel-membros.html") {
+        mainContent.innerHTML = `
+          <h2>Painel Membros</h2>
+          <p>Aqui você verá os membros da guilda.</p>
+        `;
+      } else if (page === "painel-adm.html") {
+        mainContent.innerHTML = `
+          <h2>Painel ADM</h2>
+          <p>Gerencie as opções administrativas da guilda.</p>
+        `;
+      } else {
+        mainContent.innerHTML = `
+          <h2>Erro</h2>
+          <p>Página não encontrada.</p>
+        `;
       }
     });
   });
 
-  // Função para carregar membros no painel ADM
-  function carregarMembros() {
-    try {
-      const membros = JSON.parse(localStorage.getItem("membros")) || [];
-      const listaMembros = document.getElementById("listaMembros");
-
-      if (listaMembros) {
-        listaMembros.innerHTML = ""; // Limpar lista
-        if (membros.length === 0) {
-          listaMembros.innerHTML = "<p>Nenhum membro cadastrado.</p>";
-          return;
-        }
-
-        membros.forEach((membro, index) => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-            <span>${membro.nome} - ${membro.funcao}</span>
-            <button class="btn-remover" data-index="${index}">Remover</button>
-          `;
-          listaMembros.appendChild(li);
-        });
-
-        // Adicionar eventos aos botões de remover
-        document.querySelectorAll(".btn-remover").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            const index = e.target.getAttribute("data-index");
-            removerMembro(index);
-          });
-        });
-      }
-    } catch (error) {
-      console.error("Erro ao carregar membros:", error);
-    }
-  }
-
-  // Função para remover membros
-  function removerMembro(index) {
-    try {
-      const membros = JSON.parse(localStorage.getItem("membros")) || [];
-      membros.splice(index, 1);
-      localStorage.setItem("membros", JSON.stringify(membros));
-      carregarMembros();
-      alert("Membro removido com sucesso!");
-    } catch (error) {
-      console.error("Erro ao remover membro:", error);
-    }
-  }
-
-  // Função para adicionar membros
-  const btnCriarMembro = document.getElementById("criarMembro");
-  if (btnCriarMembro) {
-    btnCriarMembro.addEventListener("click", () => {
-      try {
-        const nome = prompt("Digite o nome do membro:");
-        const funcao = prompt("Digite a função do membro:");
-
-        if (!nome || !funcao) {
-          alert("Nome e função são obrigatórios!");
-          return;
-        }
-
-        const membros = JSON.parse(localStorage.getItem("membros")) || [];
-        membros.push({ nome, funcao });
-        localStorage.setItem("membros", JSON.stringify(membros));
-        carregarMembros();
-        alert("Membro adicionado com sucesso!");
-      } catch (error) {
-        console.error("Erro ao adicionar membro:", error);
-      }
-    });
-  }
-
-  // Carregar membros ao carregar a página
-  carregarMembros();
+  // Define a página inicial como padrão
+  mainContent.innerHTML = `
+    <h2>Início</h2>
+    <p>Escolha no menu as opções que deseja acessar.</p>
+  `;
 });
