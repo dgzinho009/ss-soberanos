@@ -1,19 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Painel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="login-container">
     <h2>Login do Painel</h2>
-    <input type="text" id="usuario" placeholder="Nome de usuário" />
-    <input type="password" id="senha" placeholder="Senha" />
-    <button id="btnLogin">Entrar</button>
+    <form id="loginForm">
+      <label for="usuario">Nome de usuário</label>
+      <input type="text" id="usuario" name="usuario" placeholder="Nome de usuário" required minlength="3" />
+      
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Senha" required minlength="6" />
+      
+      <button type="submit" id="btnLogin">Entrar</button>
+    </form>
+    <div id="mensagemErro" style="color: red; display: none;">Usuário ou senha inválidos!</div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Impede o comportamento padrão de envio do formulário
+
+      const usuario = document.getElementById("usuario").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+
+      // Validação simples de exemplo (substitua por validação real)
+      if (usuario === "admin" && senha === "admin123") {
+        localStorage.setItem("usuarioTipo", "adm");
+        window.location.href = "painel_adm.html";
+      } else if (usuario && senha === "123") {
+        localStorage.setItem("usuarioTipo", "membro");
+        window.location.href = "painel_membro.html";
+      } else {
+        const mensagemErro = document.getElementById("mensagemErro");
+        mensagemErro.style.display = "block";
+        mensagemErro.textContent = "Usuário ou senha inválidos!";
+      }
+    });
+  </script>
 </body>
 </html>
