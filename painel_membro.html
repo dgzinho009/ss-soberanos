@@ -61,8 +61,12 @@
       text-align: center;
     }
 
-    .member-info h3 {
-      margin-bottom: 10px;
+    .access-adm {
+      margin-top: 20px;
+      text-align: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -94,6 +98,13 @@
       <p><strong>ID:</strong> <span id="displayId">Nenhum ID registrado</span></p>
       <p><strong>Estilo de Jogo:</strong> <span id="displayStyle">Nenhum estilo selecionado</span></p>
     </div>
+
+    <div class="access-adm">
+      <h2>Acesso ADM</h2>
+      <p>Insira a chave de acesso para entrar no Painel Administrativo:</p>
+      <input type="text" id="admKey" placeholder="Chave de Acesso">
+      <button id="accessAdm">Acessar ADM</button>
+    </div>
   </main>
 
   <script>
@@ -103,6 +114,8 @@
       const saveProfileButton = document.getElementById("saveProfile");
       const displayId = document.getElementById("displayId");
       const displayStyle = document.getElementById("displayStyle");
+      const admKeyInput = document.getElementById("admKey");
+      const accessAdmButton = document.getElementById("accessAdm");
 
       // Carregar dados salvos
       const savedId = localStorage.getItem("playerId");
@@ -143,6 +156,19 @@
         displayStyle.textContent = `${getStyleEmoji(gameStyle)} ${gameStyle}`;
 
         alert("Perfil salvo com sucesso!");
+      });
+
+      // Acesso ADM
+      accessAdmButton.addEventListener("click", () => {
+        const admKey = admKeyInput.value.trim();
+        const validKeys = ["chave-12345adm"]; // Chaves de exemplo
+
+        if (validKeys.includes(admKey)) {
+          alert("Chave válida! Redirecionando para o Painel ADM...");
+          window.location.href = "painel_adm.html";
+        } else {
+          alert("Chave inválida! Por favor, tente novamente.");
+        }
       });
     });
   </script>
