@@ -1,37 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Acesso ao Painel</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Guilda Free Fire</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="login-container">
-    <h2>Bem-vindo!</h2>
-    <p>Insira sua chave de acesso para entrar no painel.</p>
-    <form id="loginForm">
-      <label for="chaveAcesso">Chave de Acesso</label>
-      <input type="text" id="chaveAcesso" name="chaveAcesso" placeholder="Digite sua chave" required />
-      <button type="submit">Entrar</button>
-    </form>
-    <div id="mensagemErro" style="color: red; display: none;">Chave de acesso inválida!</div>
-  </div>
+  <header>
+    <h1>Bem-vindo à Guilda Free Fire</h1>
+    <p>Faça login para acessar o painel</p>
+  </header>
+
+  <main>
+    <section>
+      <form id="loginForm">
+        <h2>Login</h2>
+        <label for="usuario">Usuário:</label>
+        <input type="text" id="usuario" name="usuario" required>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+        <button type="submit">Entrar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Guilda Free Fire</p>
+  </footer>
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault(); // Evita o envio padrão do formulário
+      e.preventDefault();
 
-      const chaveAcesso = document.getElementById("chaveAcesso").value.trim();
-      const chavesValidas = JSON.parse(localStorage.getItem("chavesAcesso")) || [];
+      const usuario = document.getElementById("usuario").value.trim();
+      const senha = document.getElementById("senha").value.trim();
 
-      if (chavesValidas.includes(chaveAcesso)) {
-        // Redireciona com base no tipo de chave
+      // Administradores padrão
+      const admins = [
+        { login: "dg_admin", senha: "admin123" },
+        { login: "lk_admin", senha: "admin123" },
+      ];
+
+      // Verificar se é um administrador
+      const admin = admins.find(
+        (adm) => adm.login === usuario && adm.senha === senha
+      );
+
+      if (admin) {
+        alert("Login como Administrador bem-sucedido!");
+        window.location.href = "painel_adm.html";
+        return;
+      }
+
+      // Verificar se é um membro
+      const membros = JSON.parse(localStorage.getItem("membros")) || [];
+      const membro = membros.find((m) => m.nome === usuario);
+
+      if (membro && senha === "123456") {
+        alert(`Bem-vindo, ${membro.nome}!`);
         window.location.href = "painel_membro.html";
       } else {
-        const mensagemErro = document.getElementById("mensagemErro");
-        mensagemErro.style.display = "block";
-        mensagemErro.textContent = "Chave de acesso inválida!";
+        alert("Usuário ou senha inválidos!");
       }
     });
   </script>
