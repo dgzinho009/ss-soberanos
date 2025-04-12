@@ -1,153 +1,57 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel ADM - Soberanos</title>
+  <title>Painel Administrativo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Painel Administrativo</h1>
+  <div class="painel-container">
+    <h2>Painel Administrativo</h2>
 
-    <h2>Criar novo membro</h2>
-    <form id="formCriarMembro">
-      <input
-        type="text"
-        id="nomeMembro"
-        placeholder="Nome do Membro"
-        required
-        minlength="3"
-      />
-      <select id="funcaoMembro">
-        <option value="Rushador">Rushador</option>
-        <option value="Arrochador">Arrochador</option>
-        <option value="Suporte">Suporte</option>
-        <option value="Atirador">Atirador</option>
-      </select>
-      <button type="submit">Criar Membro</button>
-    </form>
-
-    <h2>Membros Cadastrados</h2>
-    <ul id="listaMembros"></ul>
-
-    <h2>Denúncias e Justificativas Recebidas</h2>
-    <ul id="listaMensagensADM"></ul>
+    <section class="gerar-chave">
+      <h3>Gerar Chave de Acesso</h3>
+      <button onclick="gerarChave()">Gerar Nova Chave</button>
+      <ul id="listaChaves"></ul>
+    </section>
   </div>
 
   <script>
-    // Função genérica para criar elementos
-    function criarElemento(tag, conteudo = "", atributos = {}) {
-      const elemento = document.createElement(tag);
-      if (conteudo) elemento.innerHTML = conteudo;
-      Object.keys(atributos).forEach((chave) =>
-        elemento.setAttribute(chave, atributos[chave])
-      );
-      return elemento;
+    // Função para gerar uma nova chave
+    function gerarChave() {
+      const novaChave = "chave-" + Math.random().toString(36).substr(2, 8); // Gera chave aleatória
+      const chaves = JSON.parse(localStorage.getItem("chavesAcesso")) || [];
+      chaves.push(novaChave);
+      localStorage.setItem("chavesAcesso", JSON.stringify(chaves));
+
+      carregarChaves();
+      alert("Nova chave gerada: " + novaChave);
     }
 
-    // Inicializar membros ao carregar a página
-    function listarMembros() {
-      const lista = document.getElementById("listaMembros");
+    // Função para carregar as chaves na lista
+    function carregarChaves() {
+      const lista = document.getElementById("listaChaves");
+      const chaves = JSON.parse(localStorage.getItem("chavesAcesso")) || [];
       lista.innerHTML = "";
-      try {
-        const membros = JSON.parse(localStorage.getItem("membros")) || [];
-        membros.forEach((membro) => {
-          const li = criarElemento(
-            "li",
-            `${membro.nome} - ${membro.funcao}`
-          );
-          lista.appendChild(li);
-        });
-      } catch (error) {
-        console.error("Erro ao carregar membros:", error);
-        localStorage.setItem("membros", JSON.stringify([]));
-      }
-    }
 
-    // Criar novo membro
-    document
-      .getElementById("formCriarMembro")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
-        const nome = document
-          .getElementById("nomeMembro")
-          .value.trim();
-        const funcao = document.getElementById("funcaoMembro").value;
-
-        // Validação do nome
-        if (!nome || nome.length < 3) {
-          alert("O nome do membro deve ter pelo menos 3 caracteres!");
-          return;
-        }
-
-        try {
-          const membros = JSON.parse(localStorage.getItem("membros")) || [];
-          membros.push({ nome, funcao });
-          localStorage.setItem("membros", JSON.stringify(membros));
-          listarMembros();
-          this.reset();
-          alert("Membro criado com sucesso!");
-        } catch (error) {
-          console.error("Erro ao salvar membro:", error);
-          alert("Ocorreu um erro ao salvar o membro.");
-        }
+      chaves.forEach((chave, index) => {
+        const li = document.createElement("li");
+        li.textContent = chave;
+        const btnExcluir = document.createElement("button");
+        btnExcluir.textContent = "Excluir";
+        btnExcluir.onclick = function () {
+          chaves.splice(index, 1);
+          localStorage.setItem("chavesAcesso", JSON.stringify(chaves));
+          carregarChaves();
+        };
+        li.appendChild(btnExcluir);
+        lista.appendChild(li);
       });
-
-    // Carregar mensagens (justificativas e denúncias)
-    function carregarMensagensADM() {
-      const lista = document.getElementById("listaMensagensADM");
-      lista.innerHTML = "";
-
-      try {
-        const mensagens =
-          JSON.parse(localStorage.getItem("mensagensADM")) || [];
-        mensagens.forEach((msg, index) => {
-          const li = criarElemento("li");
-          let conteudoHTML = "";
-
-          if (msg.tipo === "justificativa") {
-            conteudoHTML = `
-              <strong>Justificativa de ausência</strong><br>
-              ${msg.conteudo}<br>
-              <em>${msg.data}</em>
-            `;
-          } else if (msg.tipo === "denuncia") {
-            conteudoHTML = `
-              <strong>Denúncia contra:</strong> ${msg.nome}<br>
-              <strong>Detalhes:</strong> ${msg.detalhes}<br>
-              ${
-                msg.imagem
-                  ? `<strong>Evidência:</strong><br>
-                  <a href="${msg.imagem}" target="_blank">
-                    <img src="${msg.imagem}" style="max-width:100px; max-height:100px;">
-                  </a><br>`
-                  : ""
-              }
-              <em>${msg.data}</em><br>
-              <button onclick="criarAcao(${index})">Criar Ação</button>
-            `;
-          }
-
-          li.innerHTML = conteudoHTML;
-          lista.appendChild(li);
-        });
-      } catch (error) {
-        console.error("Erro ao carregar mensagens:", error);
-        alert("Não foi possível carregar as mensagens.");
-      }
     }
 
-    // Simulação de criação de ação
-    function criarAcao(index) {
-      alert("Ação criada para o item #" + index + ". (Simulação)");
-    }
-
-    // Inicialização ao carregar a página
-    window.addEventListener("load", () => {
-      listarMembros();
-      carregarMensagensADM();
-    });
+    // Carregar as chaves ao abrir o painel
+    document.addEventListener("DOMContentLoaded", carregarChaves);
   </script>
 </body>
 </html>
