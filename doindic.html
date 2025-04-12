@@ -1,23 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>Redirecionando...</title>
-  <script>
-    // Recupera o tipo de usuário salvo no login
-    const usuarioTipo = localStorage.getItem("usuarioTipo");
-
-    if (usuarioTipo === "adm") {
-      window.location.href = "painel-adm.html";
-    } else if (usuarioTipo === "membro") {
-      window.location.href = "painel-membro.html";
-    } else {
-      // Caso não esteja logado ou não tenha tipo definido
-      window.location.href = "index.html";
-    }
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel do Membro</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <p>Redirecionando, aguarde...</p>
+  <div class="painel-container">
+    <h2>Bem-vindo, Membro</h2>
+
+    <section class="estilo-jogo">
+      <h3>Seu Estilo de Jogo</h3>
+      <input type="text" id="novoEstilo" placeholder="Adicionar Estilo" />
+      <button onclick="adicionarEstilo()">Adicionar</button>
+      <ul id="listaEstilos"></ul>
+    </section>
+
+    <section class="justificativa">
+      <h3>Motivo de Ausência (Guerra de Guilda)</h3>
+      <textarea id="motivoInput" placeholder="Explique sua ausência..."></textarea>
+      <button onclick="enviarMotivo()">Enviar Justificativa</button>
+    </section>
+
+    <section class="denuncia">
+      <h3>Denúncia de Jogador</h3>
+      <input type="text" id="nomeDenunciado" placeholder="Nome do jogador" />
+      <textarea id="detalheDenuncia" placeholder="Explique o que aconteceu..."></textarea>
+      <input type="file" id="evidenciaImagem" accept=".png,.jpg,.jpeg"/>
+      <button onclick="enviarDenuncia()">Enviar Denúncia</button>
+    </section>
+
+    <section class="correio">
+      <h3>Caixa de Correio</h3>
+      <ul id="mensagensMembro"></ul>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
