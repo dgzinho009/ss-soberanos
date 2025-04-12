@@ -1,44 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Painel</title>
+  <title>Login - Acesso ao Painel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="login-container">
-    <h2>Login do Painel</h2>
+    <h2>Bem-vindo!</h2>
+    <p>Insira sua chave de acesso para entrar no painel.</p>
     <form id="loginForm">
-      <label for="usuario">Nome de usuário</label>
-      <input type="text" id="usuario" name="usuario" placeholder="Nome de usuário" required minlength="3" />
-      
-      <label for="senha">Senha</label>
-      <input type="password" id="senha" name="senha" placeholder="Senha" required minlength="6" />
-      
-      <button type="submit" id="btnLogin">Entrar</button>
+      <label for="chaveAcesso">Chave de Acesso</label>
+      <input type="text" id="chaveAcesso" name="chaveAcesso" placeholder="Digite sua chave" required />
+      <button type="submit">Entrar</button>
     </form>
-    <div id="mensagemErro" style="color: red; display: none;">Usuário ou senha inválidos!</div>
+    <div id="mensagemErro" style="color: red; display: none;">Chave de acesso inválida!</div>
   </div>
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault(); // Impede o comportamento padrão de envio do formulário
+      e.preventDefault(); // Evita o envio padrão do formulário
 
-      const usuario = document.getElementById("usuario").value.trim();
-      const senha = document.getElementById("senha").value.trim();
+      const chaveAcesso = document.getElementById("chaveAcesso").value.trim();
+      const chavesValidas = JSON.parse(localStorage.getItem("chavesAcesso")) || [];
 
-      // Validação simples de exemplo (substitua por validação real)
-      if (usuario === "admin" && senha === "admin123") {
-        localStorage.setItem("usuarioTipo", "adm");
-        window.location.href = "painel_adm.html";
-      } else if (usuario && senha === "123") {
-        localStorage.setItem("usuarioTipo", "membro");
+      if (chavesValidas.includes(chaveAcesso)) {
+        // Redireciona com base no tipo de chave
         window.location.href = "painel_membro.html";
       } else {
         const mensagemErro = document.getElementById("mensagemErro");
         mensagemErro.style.display = "block";
-        mensagemErro.textContent = "Usuário ou senha inválidos!";
+        mensagemErro.textContent = "Chave de acesso inválida!";
       }
     });
   </script>
