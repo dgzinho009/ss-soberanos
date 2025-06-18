@@ -1,11 +1,25 @@
-import { createClient } from '@supabase/supabase-js';
-
 // Supabase configuration
 const supabaseUrl = 'https://finigacjcwrrypcgooyf.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpbmlnYWNqY3dycnlwY2dvb3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5OTM5NTksImV4cCI6MjA2NTU2OTk1OX0.CLS27MiQeGSHRQiA0vJu5zUFJO4-sA3JPEIB-dd5pFM';
 
 // Initialize Supabase client
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// Test Supabase connection
+async function testSupabaseConnection() {
+    try {
+        const { data, error } = await supabase.from('sensitivity_configs').select('count').limit(1);
+        if (error) {
+            console.error('Supabase connection error:', error);
+            return false;
+        }
+        console.log('Supabase connected successfully');
+        return true;
+    } catch (error) {
+        console.error('Supabase connection failed:', error);
+        return false;
+    }
+}
 
 // Mobile menu toggle
 document.getElementById('menuToggle').addEventListener('click', function() {
@@ -19,9 +33,6 @@ function scrollToCalculator() {
         behavior: 'smooth'
     });
 }
-
-// Make function global for HTML onclick
-window.scrollToCalculator = scrollToCalculator;
 
 // Sensitivity calculation logic
 function calcularSensibilidade() {
@@ -62,9 +73,6 @@ function calcularSensibilidade() {
         timestamp: new Date().toLocaleString('pt-BR')
     };
 }
-
-// Make function global for HTML onclick
-window.calcularSensibilidade = calcularSensibilidade;
 
 function calcularSensibilidadePUBG(nivel, funcao, mira) {
     let geral = 0, redDot = 0, mira2x = 0, mira4x = 0, awm = 0;
@@ -201,61 +209,91 @@ async function salvarConfiguracao() {
     saveBtn.textContent = 'Salvando...';
     
     try {
+        console.log('Tentando salvar configuração:', window.currentConfig);
+        
+        const configData = {
+            nickname: window.currentConfig.nickname,
+            game: window.currentConfig.game,
+            device: window.currentConfig.device,
+            role: window.currentConfig.role,
+            aim_style: window.currentConfig.aimStyle,
+            sensitivity_general: parseInt(window.currentConfig.sensitivity.geral),
+            sensitivity_red_dot: parseInt(window.currentConfig.sensitivity.redDot),
+            sensitivity_2x: parseInt(window.currentConfig.sensitivity.mira2x),
+            sensitivity_4x: parseInt(window.currentConfig.sensitivity.mira4x),
+            sensitivity_awm: parseInt(window.currentConfig.sensitivity.awm)
+        };
+        
+        console.log('Dados para salvar:', configData);
+        
         const { data, error } = await supabase
             .from('sensitivity_configs')
-            .insert([
-                {
-                    nickname: window.currentConfig.nickname,
-                    game: window.currentConfig.game,
-                    device: window.currentConfig.device,
-                    role: window.currentConfig.role,
-                    aim_style: window.currentConfig.aimStyle,
-                    sensitivity_general: window.currentConfig.sensitivity.geral,
-                    sensitivity_red_dot: window.currentConfig.sensitivity.redDot,
-                    sensitivity_2x: window.currentConfig.sensitivity.mira2x,
-                    sensitivity_4x: window.currentConfig.sensitivity.mira4x,
-                    sensitivity_awm: window.currentConfig.sensitivity.awm
-                }
-            ])
+            .insert([configData])
             .select();
 
-        if (error) throw error;
+        if (error) {
+            console.error('Erro do Supabase:', error);
+            throw error;
+        }
         
+        console.log('Configuração salva com sucesso:', data);
         saveStatus.textContent = 'Configuração salva com sucesso na cloud!';
         saveStatus.className = 'save-status success';
         
         // Load and display saved configs
-        loadSavedConfigs();
+        await loadSavedConfigs();
         
     } catch (error) {
         console.error('Erro ao salvar:', error);
-        saveStatus.textContent = 'Erro ao salvar configuração. Tente novamente.';
-        saveStatus.className = 'save-status error';
+        
+        // Fallback to localStorage
+        try {
+            const savedConfigs = JSON.parse(localStorage.getItem('soberanos-configs') || '[]');
+            const configId = Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9);
+            const configToSave = {
+                id: configId,
+                ...window.currentConfig
+            };
+            savedConfigs.push(configToSave);
+            localStorage.setItem('soberanos-configs', JSON.stringify(savedConfigs));
+            
+            saveStatus.textContent = 'Salvo localmente (erro na cloud: ' + error.message + ')';
+            saveStatus.className = 'save-status success';
+            
+            await loadSavedConfigs();
+        } catch (localError) {
+            saveStatus.textContent = 'Erro ao salvar: ' + error.message;
+            saveStatus.className = 'save-status error';
+        }
     } finally {
         saveBtn.disabled = false;
         saveBtn.textContent = '💾 Salvar na Cloud';
         
-        // Clear status after 3 seconds
+        // Clear status after 5 seconds
         setTimeout(() => {
             saveStatus.textContent = '';
             saveStatus.className = 'save-status';
-        }, 3000);
+        }, 5000);
     }
 }
-
-// Make function global for HTML onclick
-window.salvarConfiguracao = salvarConfiguracao;
 
 // Load saved configurations from Supabase
 async function loadSavedConfigs() {
     try {
+        console.log('Carregando configurações salvas...');
+        
         const { data: configs, error } = await supabase
             .from('sensitivity_configs')
             .select('*')
             .order('created_at', { ascending: false })
             .limit(10); // Show last 10 configurations
 
-        if (error) throw error;
+        if (error) {
+            console.error('Erro ao carregar do Supabase:', error);
+            throw error;
+        }
+        
+        console.log('Configurações carregadas:', configs);
         
         if (configs && configs.length > 0) {
             displaySavedConfigs(configs);
@@ -342,8 +380,18 @@ function displaySavedConfigs(configs) {
 }
 
 // Load saved configs on page load
-document.addEventListener('DOMContentLoaded', function() {
-    loadSavedConfigs();
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('Página carregada, testando conexão Supabase...');
+    const connected = await testSupabaseConnection();
+    if (connected) {
+        await loadSavedConfigs();
+    } else {
+        console.log('Usando localStorage como fallback');
+        const savedConfigs = JSON.parse(localStorage.getItem('soberanos-configs') || '[]');
+        if (savedConfigs.length > 0) {
+            displaySavedConfigs(savedConfigs.reverse());
+        }
+    }
 });
 
 // Smooth scrolling for navigation links
