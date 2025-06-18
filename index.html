@@ -1,16 +1,165 @@
-<header class="header">
-  <div class="container">
-    <button class="menu-toggle" id="menuToggle">☰</button>
-    <div class="logo">
-      <span>Soberanos</span>
-    </div>
-  </div>
-  <nav class="navbar" id="menu">
-    <ul class="menu">
-      <li><a href="#home">Início</a></li>
-      <li><a href="#about">Sobre</a></li>
-      <li><a href="#members">Membros</a></li>
-      <li><a href="#contact">Contato</a></li>
-    </ul>
-  </nav>
-</header>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soberanos - Calculadora de Sensibilidade</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <div class="logo">
+                <span>Soberanos</span>
+            </div>
+        </div>
+        <nav class="navbar" id="menu">
+            <ul class="menu">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#calculator">Calculadora</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#members">Membros</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Calculadora de Sensibilidade</h1>
+                    <p>Configure suas sensibilidades ideais para PUBG Mobile e Free Fire baseadas no seu dispositivo, função e estilo de jogo</p>
+                    <button class="cta-button" onclick="scrollToCalculator()">Começar Agora</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="calculator" class="calculator-section">
+            <div class="container">
+                <div class="calculator-card">
+                    <h2>🎯 Configurar Sensibilidade</h2>
+                    
+                    <form id="sensitivityForm" class="sensitivity-form">
+                        <div class="form-group">
+                            <label for="nickname">🎮 Nickname do Jogador</label>
+                            <input type="text" id="nickname" name="nickname" placeholder="Digite seu nickname" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game">🎮 Jogo</label>
+                            <select id="game" name="game" required>
+                                <option value="">Selecione o jogo</option>
+                                <option value="PUBG">PUBG Mobile</option>
+                                <option value="FreeFire">Free Fire</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="device">📱 Nível do Telemóvel</label>
+                            <select id="device" name="device" required>
+                                <option value="">Selecione o nível</option>
+                                <option value="Fraco">Fraco</option>
+                                <option value="Médio">Médio</option>
+                                <option value="Forte">Forte</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">🧠 Função no Time</label>
+                            <select id="role" name="role" required>
+                                <option value="">Selecione a função</option>
+                                <option value="Rush">Rush</option>
+                                <option value="Suporte">Suporte</option>
+                                <option value="AWM">AWM</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aimStyle">🎯 Estilo de Mira</label>
+                            <select id="aimStyle" name="aimStyle" required>
+                                <option value="">Selecione o estilo</option>
+                                <option value="Rápida">Rápida</option>
+                                <option value="Precisa">Precisa</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="calculate-btn" onclick="calcularSensibilidade()">
+                            Calcular Sensibilidade
+                        </button>
+                    </form>
+
+                    <div id="results" class="results-section" style="display: none;">
+                        <h3>📊 Configurações Recomendadas</h3>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <span class="result-label">Sensibilidade Geral</span>
+                                <span class="result-value" id="generalSens">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Ponto Vermelho</span>
+                                <span class="result-value" id="redDotSens">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Mira 2x</span>
+                                <span class="result-value" id="aim2xSens">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Mira 4x</span>
+                                <span class="result-value" id="aim4xSens">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">AWM</span>
+                                <span class="result-value" id="awmSens">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="save-section">
+                            <button type="button" class="save-btn" onclick="salvarConfiguracao()">
+                                💾 Salvar na Cloud
+                            </button>
+                            <div id="saveStatus" class="save-status"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="saved-configs" id="savedConfigs" style="display: none;">
+                    <h3>📋 Configurações Salvas</h3>
+                    <div id="configsList" class="configs-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>Sobre a Calculadora</h2>
+                <p>Nossa calculadora de sensibilidade foi desenvolvida especificamente para jogadores de PUBG Mobile e Free Fire, levando em consideração diferentes tipos de dispositivos, funções no time e estilos de jogo.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>📱 Otimização por Dispositivo</h3>
+                        <p>Configurações adaptadas para celulares fracos, médios e fortes</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎯 Personalização por Função</h3>
+                        <p>Ajustes específicos para Rush, Suporte e AWM</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💾 Salvamento na Cloud</h3>
+                        <p>Suas configurações ficam salvas e acessíveis a qualquer momento</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Soberanos Team. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
