@@ -1,19 +1,11 @@
-// Firebase configuration (replace with your actual config)
-const firebaseConfig = {
-    // Add your Firebase config here
-    apiKey: "your-api-key",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "your-app-id"
-};
+import { createClient } from '@supabase/supabase-js';
 
-// Initialize Firebase (uncomment when you have Firebase config)
-// import { initializeApp } from 'firebase/app';
-// import { getFirestore, collection, addDoc, getDocs, orderBy, query } from 'firebase/firestore';
-// const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
+// Supabase configuration
+const supabaseUrl = 'https://finigacjcwrrypcgooyf.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpbmlnYWNqY3dycnlwY2dvb3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5OTM5NTksImV4cCI6MjA2NTU2OTk1OX0.CLS27MiQeGSHRQiA0vJu5zUFJO4-sA3JPEIB-dd5pFM';
+
+// Initialize Supabase client
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Mobile menu toggle
 document.getElementById('menuToggle').addEventListener('click', function() {
@@ -27,6 +19,9 @@ function scrollToCalculator() {
         behavior: 'smooth'
     });
 }
+
+// Make function global for HTML onclick
+window.scrollToCalculator = scrollToCalculator;
 
 // Sensitivity calculation logic
 function calcularSensibilidade() {
@@ -67,6 +62,9 @@ function calcularSensibilidade() {
         timestamp: new Date().toLocaleString('pt-BR')
     };
 }
+
+// Make function global for HTML onclick
+window.calcularSensibilidade = calcularSensibilidade;
 
 function calcularSensibilidadePUBG(nivel, funcao, mira) {
     let geral = 0, redDot = 0, mira2x = 0, mira4x = 0, awm = 0;
@@ -189,7 +187,7 @@ function displayResults(sensitivity) {
     });
 }
 
-// Save configuration
+// Save configuration to Supabase
 async function salvarConfiguracao() {
     if (!window.currentConfig) {
         alert('Calcule a sensibilidade primeiro!');
@@ -203,23 +201,27 @@ async function salvarConfiguracao() {
     saveBtn.textContent = 'Salvando...';
     
     try {
-        // For now, save to localStorage (replace with Firebase when configured)
-        const savedConfigs = JSON.parse(localStorage.getItem('soberanos-configs') || '[]');
+        const { data, error } = await supabase
+            .from('sensitivity_configs')
+            .insert([
+                {
+                    nickname: window.currentConfig.nickname,
+                    game: window.currentConfig.game,
+                    device: window.currentConfig.device,
+                    role: window.currentConfig.role,
+                    aim_style: window.currentConfig.aimStyle,
+                    sensitivity_general: window.currentConfig.sensitivity.geral,
+                    sensitivity_red_dot: window.currentConfig.sensitivity.redDot,
+                    sensitivity_2x: window.currentConfig.sensitivity.mira2x,
+                    sensitivity_4x: window.currentConfig.sensitivity.mira4x,
+                    sensitivity_awm: window.currentConfig.sensitivity.awm
+                }
+            ])
+            .select();
+
+        if (error) throw error;
         
-        // Generate unique ID
-        const configId = Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9);
-        const configToSave = {
-            id: configId,
-            ...window.currentConfig
-        };
-        
-        savedConfigs.push(configToSave);
-        localStorage.setItem('soberanos-configs', JSON.stringify(savedConfigs));
-        
-        // Uncomment when Firebase is configured
-        // await addDoc(collection(db, 'sensitivity-configs'), window.currentConfig);
-        
-        saveStatus.textContent = 'Configuração salva com sucesso!';
+        saveStatus.textContent = 'Configuração salva com sucesso na cloud!';
         saveStatus.className = 'save-status success';
         
         // Load and display saved configs
@@ -241,27 +243,31 @@ async function salvarConfiguracao() {
     }
 }
 
-// Load saved configurations
-function loadSavedConfigs() {
+// Make function global for HTML onclick
+window.salvarConfiguracao = salvarConfiguracao;
+
+// Load saved configurations from Supabase
+async function loadSavedConfigs() {
     try {
-        // For now, load from localStorage (replace with Firebase when configured)
-        const savedConfigs = JSON.parse(localStorage.getItem('soberanos-configs') || '[]');
+        const { data: configs, error } = await supabase
+            .from('sensitivity_configs')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(10); // Show last 10 configurations
+
+        if (error) throw error;
         
-        if (savedConfigs.length > 0) {
-            displaySavedConfigs(savedConfigs.reverse()); // Show newest first
+        if (configs && configs.length > 0) {
+            displaySavedConfigs(configs);
         }
-        
-        // Uncomment when Firebase is configured
-        // const q = query(collection(db, 'sensitivity-configs'), orderBy('timestamp', 'desc'));
-        // const querySnapshot = await getDocs(q);
-        // const configs = [];
-        // querySnapshot.forEach((doc) => {
-        //     configs.push({ id: doc.id, ...doc.data() });
-        // });
-        // displaySavedConfigs(configs);
         
     } catch (error) {
         console.error('Erro ao carregar configurações:', error);
+        // Fallback to localStorage if Supabase fails
+        const savedConfigs = JSON.parse(localStorage.getItem('soberanos-configs') || '[]');
+        if (savedConfigs.length > 0) {
+            displaySavedConfigs(savedConfigs.reverse());
+        }
     }
 }
 
@@ -279,37 +285,53 @@ function displaySavedConfigs(configs) {
     configs.forEach(config => {
         const configElement = document.createElement('div');
         configElement.className = 'config-item';
+        
+        // Handle both Supabase format and localStorage format
+        const sensitivity = config.sensitivity || {
+            geral: config.sensitivity_general,
+            redDot: config.sensitivity_red_dot,
+            mira2x: config.sensitivity_2x,
+            mira4x: config.sensitivity_4x,
+            awm: config.sensitivity_awm
+        };
+        
+        const timestamp = config.created_at ? 
+            new Date(config.created_at).toLocaleString('pt-BR') : 
+            config.timestamp;
+            
+        const aimStyle = config.aim_style || config.aimStyle;
+        
         configElement.innerHTML = `
             <div class="config-header">
                 <span class="config-nickname">${config.nickname}</span>
-                <span class="config-timestamp">${config.timestamp}</span>
+                <span class="config-timestamp">${timestamp}</span>
             </div>
             <div class="config-details">
                 <div class="config-detail"><strong>Jogo:</strong> ${config.game}</div>
                 <div class="config-detail"><strong>Dispositivo:</strong> ${config.device}</div>
                 <div class="config-detail"><strong>Função:</strong> ${config.role}</div>
-                <div class="config-detail"><strong>Estilo:</strong> ${config.aimStyle}</div>
+                <div class="config-detail"><strong>Estilo:</strong> ${aimStyle}</div>
             </div>
             <div class="config-sensitivities">
                 <div class="config-sens">
                     <span class="config-sens-label">Geral</span>
-                    <span class="config-sens-value">${config.sensitivity.geral}</span>
+                    <span class="config-sens-value">${sensitivity.geral}</span>
                 </div>
                 <div class="config-sens">
                     <span class="config-sens-label">Red Dot</span>
-                    <span class="config-sens-value">${config.sensitivity.redDot}</span>
+                    <span class="config-sens-value">${sensitivity.redDot}</span>
                 </div>
                 <div class="config-sens">
                     <span class="config-sens-label">2x</span>
-                    <span class="config-sens-value">${config.sensitivity.mira2x}</span>
+                    <span class="config-sens-value">${sensitivity.mira2x}</span>
                 </div>
                 <div class="config-sens">
                     <span class="config-sens-label">4x</span>
-                    <span class="config-sens-value">${config.sensitivity.mira4x}</span>
+                    <span class="config-sens-value">${sensitivity.mira4x}</span>
                 </div>
                 <div class="config-sens">
                     <span class="config-sens-label">AWM</span>
-                    <span class="config-sens-value">${config.sensitivity.awm}</span>
+                    <span class="config-sens-value">${sensitivity.awm}</span>
                 </div>
             </div>
         `;
